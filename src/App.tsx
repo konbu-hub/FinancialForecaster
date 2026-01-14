@@ -4,12 +4,13 @@ import PriceChart from './components/PriceChart';
 import PredictionChart from './components/PredictionChart';
 import AnalysisReport from './components/AnalysisReport';
 import CompanyInfo from './components/CompanyInfo';
+import CryptoInfo from './components/CryptoInfo';
 import { getCryptoData, getCryptoHistoricalData, resolveCoinId } from './services/cryptoService';
 import { getStockData, getStockHistoricalData, type StockData } from './services/stockService';
 import { getAssetNews } from './services/newsService';
 import { generatePricePrediction } from './services/aiService';
 import { getExchangeRates, convertCurrency, formatCurrency } from './utils/currencyUtils';
-import type { HistoricalPrice } from './services/cryptoService';
+import type { HistoricalPrice, CryptoData } from './services/cryptoService';
 import type { PredictionResult } from './services/aiService';
 import './index.css';
 
@@ -23,6 +24,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string>('');
   const [stockData, setStockData] = useState<StockData | null>(null);
+  const [cryptoData, setCryptoData] = useState<CryptoData | null>(null);
 
   // 通貨設定（JPYを標準）
   const [currency, setCurrency] = useState<'JPY' | 'USD'>('JPY');
@@ -43,6 +45,7 @@ function App() {
     setAssetType(type);
     setPrediction(null);
     setStockData(null);
+    setCryptoData(null);
 
     try {
       let name = '';
@@ -55,10 +58,12 @@ function App() {
         const coinId = await resolveCoinId(query.toLowerCase());
 
         // 仮想通貨データ取得
-        const cryptoData = await getCryptoData(coinId);
-        name = cryptoData.name;
-        price = cryptoData.current_price;
-        change = cryptoData.price_change_percentage_24h;
+        const data = await getCryptoData(coinId);
+        setCryptoData(data);
+
+        name = data.name;
+        price = data.current_price;
+        change = data.price_change_percentage_24h;
         historical = await getCryptoHistoricalData(coinId);
       } else {
         // 株式データ取得
@@ -83,10 +88,13 @@ function App() {
       setPrediction(predictionResult);
     } catch (err) {
       console.error('Search error:', err);
-      const errorMessage = err instanceof Error && err.message.includes('見つかりませんでした')
+      // エラーオブジェクトか文字列か判定してメッセージを設定
+      const errorMessage = err instanceof Error ? err.message : '不明なエラーが発生しました';
+
+      const displayMessage = errorMessage.includes('見つかりませんでした')
         ? '指定された銘柄が見つかりませんでした。別の名前やシンボルで試してください。'
         : 'データの取得に失敗しました。しばらくしてから再度お試しください。';
-      setError(errorMessage);
+      setError(displayMessage);
     } finally {
       setIsLoading(false);
     }
@@ -209,6 +217,15 @@ function App() {
           {/* 会社情報（株式のみ） */}
           {assetType === 'stock' && stockData && (
             <CompanyInfo stockData={stockData} />
+          )}
+
+          {/* 仮想通貨詳細情報（仮想通貨のみ） */}
+          {assetType === 'crypto' && cryptoData && (
+            <CryptoInfo
+              cryptoData={cryptoData}
+              currency={currency}
+              exchangeRates={exchangeRates}
+            />
           )}
 
           {/* 過去データチャート */}
