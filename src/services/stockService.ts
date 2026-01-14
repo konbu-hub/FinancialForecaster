@@ -11,8 +11,9 @@ export interface StockData {
     employees?: number;     // 従業員数
     description?: string;   // 企業説明
     country?: string;       // 国（'US' | 'JP'）
+    revenue?: number;       // 売上高 (直近決算)
+    operatingIncome?: number; // 営業利益 (直近決算)
 }
-
 
 /**
  * 株式の現在価格とデータを取得
@@ -34,6 +35,8 @@ export async function getStockData(symbol: string): Promise<StockData> {
                 employees: 164000,
                 description: '世界最大級のテクノロジー企業。iPhone、Mac、iPadなどを展開',
                 country: 'US',
+                revenue: 383285000000,
+                operatingIncome: 114301000000,
             },
             GOOGL: {
                 symbol: 'GOOGL',
@@ -46,6 +49,8 @@ export async function getStockData(symbol: string): Promise<StockData> {
                 employees: 190234,
                 description: 'Google親会社。検索エンジン、クラウド、AIサービスを提供',
                 country: 'US',
+                revenue: 307394000000,
+                operatingIncome: 84293000000,
             },
             MSFT: {
                 symbol: 'MSFT',
@@ -58,6 +63,8 @@ export async function getStockData(symbol: string): Promise<StockData> {
                 employees: 221000,
                 description: 'Windows、Office、Azureを提供する世界的ソフトウェア企業',
                 country: 'US',
+                revenue: 211915000000,
+                operatingIncome: 88523000000,
             },
             TSLA: {
                 symbol: 'TSLA',
@@ -70,6 +77,8 @@ export async function getStockData(symbol: string): Promise<StockData> {
                 employees: 127855,
                 description: '電気自動車のパイオニア。自動運転技術も開発',
                 country: 'US',
+                revenue: 96773000000,
+                operatingIncome: 8891000000,
             },
             // 日本株
             '7203.T': {
@@ -83,6 +92,8 @@ export async function getStockData(symbol: string): Promise<StockData> {
                 employees: 375235,
                 description: '世界最大級の自動車メーカー。ハイブリッド技術のリーダー',
                 country: 'JP',
+                revenue: 45095300000000,
+                operatingIncome: 5352900000000,
             },
             '6758.T': {
                 symbol: '6758.T',
@@ -95,6 +106,8 @@ export async function getStockData(symbol: string): Promise<StockData> {
                 employees: 109700,
                 description: 'グローバルエンタテインメント企業。ゲーム、音楽、映画を展開',
                 country: 'JP',
+                revenue: 13020800000000,
+                operatingIncome: 1208800000000,
             },
             '7974.T': {
                 symbol: '7974.T',
@@ -107,6 +120,8 @@ export async function getStockData(symbol: string): Promise<StockData> {
                 employees: 6717,
                 description: '世界的なゲーム機・ソフトウェアメーカー。Switch、マリオなど',
                 country: 'JP',
+                revenue: 1671800000000,
+                operatingIncome: 528900000000,
             },
             '9984.T': {
                 symbol: '9984.T',
@@ -119,6 +134,8 @@ export async function getStockData(symbol: string): Promise<StockData> {
                 employees: 67000,
                 description: 'テクノロジー投資会社。通信事業とベンチャー投資を展開',
                 country: 'JP',
+                revenue: 6761600000000,
+                operatingIncome: -234000000000,
             },
             '6861.T': {
                 symbol: '6861.T',
@@ -131,6 +148,8 @@ export async function getStockData(symbol: string): Promise<StockData> {
                 employees: 9335,
                 description: '産業用センサー・測定器のトップメーカー。高収益企業',
                 country: 'JP',
+                revenue: 966800000000,
+                operatingIncome: 494500000000,
             },
             '7267.T': {
                 symbol: '7267.T',
@@ -143,6 +162,8 @@ export async function getStockData(symbol: string): Promise<StockData> {
                 employees: 204035,
                 description: '世界的な自動車・二輪車メーカー。F1でも活躍',
                 country: 'JP',
+                revenue: 20428800000000,
+                operatingIncome: 1381900000000,
             },
             '7201.T': {
                 symbol: '7201.T',
@@ -155,6 +176,8 @@ export async function getStockData(symbol: string): Promise<StockData> {
                 employees: 131461,
                 description: '日本の大手自動車メーカー。電気自動車リーフを展開',
                 country: 'JP',
+                revenue: 12685700000000,
+                operatingIncome: 568700000000,
             },
             '9433.T': {
                 symbol: '9433.T',
@@ -167,6 +190,8 @@ export async function getStockData(symbol: string): Promise<StockData> {
                 employees: 49930,
                 description: '日本の大手通信事業者。auブランドで展開',
                 country: 'JP',
+                revenue: 5743400000000,
+                operatingIncome: 961600000000,
             },
             '9432.T': {
                 symbol: '9432.T',
@@ -179,6 +204,8 @@ export async function getStockData(symbol: string): Promise<StockData> {
                 employees: 330000,
                 description: '日本最大の通信事業者。NTTドコモなどを傘下に持つ',
                 country: 'JP',
+                revenue: 13200600000000,
+                operatingIncome: 1922600000000,
             },
             '8306.T': {
                 symbol: '8306.T',
@@ -191,6 +218,8 @@ export async function getStockData(symbol: string): Promise<StockData> {
                 employees: 160000,
                 description: '日本最大の金融グループ。三菱UFJ銀行を中核とする',
                 country: 'JP',
+                revenue: 11044400000000, // 経常収益
+                operatingIncome: 2500000000000, // 業務純益（概算）
             },
             '4502.T': {
                 symbol: '4502.T',
@@ -203,6 +232,8 @@ export async function getStockData(symbol: string): Promise<StockData> {
                 employees: 47099,
                 description: '日本最大の製薬会社。グローバルに事業展開',
                 country: 'JP',
+                revenue: 4263800000000,
+                operatingIncome: 214100000000,
             },
             '6501.T': {
                 symbol: '6501.T',
@@ -215,6 +246,8 @@ export async function getStockData(symbol: string): Promise<StockData> {
                 employees: 368247,
                 description: '総合電機メーカー。社会インフラ、ITシステムに強み',
                 country: 'JP',
+                revenue: 9728700000000,
+                operatingIncome: 755800000000,
             },
             '9983.T': {
                 symbol: '9983.T',
@@ -227,6 +260,8 @@ export async function getStockData(symbol: string): Promise<StockData> {
                 employees: 56143,
                 description: 'ユニクロを展開する世界的アパレル企業',
                 country: 'JP',
+                revenue: 2766500000000,
+                operatingIncome: 381000000000,
             },
             // 新規追加銘柄
             '2181.T': {
@@ -240,6 +275,8 @@ export async function getStockData(symbol: string): Promise<StockData> {
                 employees: 58000,
                 description: '人材派遣・人材紹介サービスの大手。テンプスタッフ、パーソルキャリアなどを展開',
                 country: 'JP',
+                revenue: 1327100000000,
+                operatingIncome: 65000000000,
             },
             '6098.T': {
                 symbol: '6098.T',
@@ -252,6 +289,8 @@ export async function getStockData(symbol: string): Promise<StockData> {
                 employees: 51000,
                 description: '人材サービス、求人広告の世界的企業。Indeed、リクナビなどを運営',
                 country: 'JP',
+                revenue: 3416900000000,
+                operatingIncome: 403800000000,
             },
             '4385.T': {
                 symbol: '4385.T',
@@ -264,6 +303,8 @@ export async function getStockData(symbol: string): Promise<StockData> {
                 employees: 2100,
                 description: '日本最大のフリマアプリ運営企業。C2Cマーケットプレイスのリーダー',
                 country: 'JP',
+                revenue: 187700000000,
+                operatingIncome: 18000000000, // 修正調整後想定
             },
             '4751.T': {
                 symbol: '4751.T',
@@ -276,6 +317,8 @@ export async function getStockData(symbol: string): Promise<StockData> {
                 employees: 6500,
                 description: 'インターネット広告、ゲーム事業を展開。AbemaTVを運営',
                 country: 'JP',
+                revenue: 809400000000,
+                operatingIncome: 45700000000, // 修正調整後想定
             },
             '4519.T': {
                 symbol: '4519.T',
@@ -288,6 +331,8 @@ export async function getStockData(symbol: string): Promise<StockData> {
                 employees: 7800,
                 description: 'ロシュグループの日本法人。がん治療薬に強み',
                 country: 'JP',
+                revenue: 1345400000000,
+                operatingIncome: 450000000000,
             },
             '4523.T': {
                 symbol: '4523.T',
@@ -300,6 +345,8 @@ export async function getStockData(symbol: string): Promise<StockData> {
                 employees: 10500,
                 description: 'アルツハイマー病治療薬の開発に注力する大手製薬会社',
                 country: 'JP',
+                revenue: 736700000000,
+                operatingIncome: 53400000000,
             },
             '9434.T': {
                 symbol: '9434.T',
@@ -312,6 +359,8 @@ export async function getStockData(symbol: string): Promise<StockData> {
                 employees: 18500,
                 description: '国内大手通信キャリア。5G、IoT事業を展開',
                 country: 'JP',
+                revenue: 6084000000000,
+                operatingIncome: 865000000000,
             },
             '9613.T': {
                 symbol: '9613.T',
@@ -324,6 +373,8 @@ export async function getStockData(symbol: string): Promise<StockData> {
                 employees: 150000,
                 description: 'NTTグループのシステムインテグレーター。官公庁、金融に強み',
                 country: 'JP',
+                revenue: 4367300000000,
+                operatingIncome: 290000000000,
             },
             '6594.T': {
                 symbol: '6594.T',
@@ -336,6 +387,8 @@ export async function getStockData(symbol: string): Promise<StockData> {
                 employees: 110000,
                 description: '精密小型モーター世界トップ。EV用モーターにも注力',
                 country: 'JP',
+                revenue: 2242800000000,
+                operatingIncome: 180000000000,
             },
             '6981.T': {
                 symbol: '6981.T',
@@ -348,6 +401,8 @@ export async function getStockData(symbol: string): Promise<StockData> {
                 employees: 76000,
                 description: '電子部品世界大手。セラミックコンデンサで圧倒的シェア',
                 country: 'JP',
+                revenue: 1640100000000,
+                operatingIncome: 297800000000,
             },
             '6920.T': {
                 symbol: '6920.T',
@@ -360,6 +415,8 @@ export async function getStockData(symbol: string): Promise<StockData> {
                 employees: 1500,
                 description: '半導体検査装置の世界的リーダー。EUV関連で高成長',
                 country: 'JP',
+                revenue: 152800000000,
+                operatingIncome: 62400000000,
             },
             '9843.T': {
                 symbol: '9843.T',
@@ -372,6 +429,8 @@ export async function getStockData(symbol: string): Promise<StockData> {
                 employees: 18000,
                 description: '家具・インテリア小売大手。製造小売業(SPA)モデルで成長',
                 country: 'JP',
+                revenue: 951400000000,
+                operatingIncome: 125000000000,
             },
             '7453.T': {
                 symbol: '7453.T',
@@ -384,6 +443,8 @@ export async function getStockData(symbol: string): Promise<StockData> {
                 employees: 8500,
                 description: '無印良品を展開。シンプルデザインで国内外に店舗展開',
                 country: 'JP',
+                revenue: 662700000000,
+                operatingIncome: 56000000000,
             },
             '4755.T': {
                 symbol: '4755.T',
@@ -396,6 +457,8 @@ export async function getStockData(symbol: string): Promise<StockData> {
                 employees: 28000,
                 description: 'EC、フィンテック、通信など多角的に事業展開する日本のインターネットサービス企業',
                 country: 'JP',
+                revenue: 2071300000000,
+                operatingIncome: -58600000000,
             },
         };
 

@@ -41,7 +41,7 @@ export default function CompanyInfo({ stockData }: CompanyInfoProps) {
                             時価総額
                         </p>
                         <p className="glow-text-purple" style={{ fontSize: '1.125rem', fontWeight: 600 }}>
-                            {formatMarketCap(stockData.marketCap)}
+                            {stockData.country === 'US' ? '$' : '¥'}{formatLargeNumber(stockData.marketCap, stockData.country)}
                         </p>
                     </div>
                 )}
@@ -56,16 +56,50 @@ export default function CompanyInfo({ stockData }: CompanyInfoProps) {
                         </p>
                     </div>
                 )}
+
+                {stockData.revenue && (
+                    <div>
+                        <p style={{ color: 'var(--color-gray-400)', fontSize: '0.875rem', marginBottom: '0.5rem' }}>
+                            前年度売上高
+                        </p>
+                        <p className="glow-text-blue" style={{ fontSize: '1.125rem', fontWeight: 600 }}>
+                            {stockData.country === 'US' ? '$' : '¥'}{formatLargeNumber(stockData.revenue, stockData.country)}
+                        </p>
+                    </div>
+                )}
+
+                {stockData.operatingIncome && (
+                    <div>
+                        <p style={{ color: 'var(--color-gray-400)', fontSize: '0.875rem', marginBottom: '0.5rem' }}>
+                            営業利益
+                        </p>
+                        <p style={{ fontSize: '1.125rem', fontWeight: 600, color: stockData.operatingIncome >= 0 ? 'var(--color-success)' : 'var(--color-error)' }}>
+                            {stockData.country === 'US' ? '$' : '¥'}{formatLargeNumber(stockData.operatingIncome, stockData.country)}
+                        </p>
+                    </div>
+                )}
             </div>
         </div>
     );
 }
 
-function formatMarketCap(value: number): string {
-    if (value >= 1_000_000_000_000) {
-        return `¥${(value / 1_000_000_000_000).toFixed(1)}兆`;
-    } else if (value >= 100_000_000) {
-        return `¥${(value / 100_000_000).toFixed(0)}億`;
+function formatLargeNumber(value: number, country?: string): string {
+    const absValue = Math.abs(value);
+    // USドルの場合 (Billion/Million)
+    if (country === 'US') {
+        if (absValue >= 1_000_000_000) {
+            return `${(value / 1_000_000_000).toFixed(1)}B`;
+        } else if (absValue >= 1_000_000) {
+            return `${(value / 1_000_000).toFixed(1)}M`;
+        }
+        return value.toLocaleString();
     }
-    return `¥${value.toLocaleString()}`;
+
+    // 日本円の場合 (兆/億)
+    if (absValue >= 1_000_000_000_000) {
+        return `${(value / 1_000_000_000_000).toFixed(1)}兆`;
+    } else if (absValue >= 100_000_000) {
+        return `${(value / 100_000_000).toFixed(0)}億`;
+    }
+    return value.toLocaleString();
 }
