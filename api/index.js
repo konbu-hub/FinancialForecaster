@@ -238,18 +238,6 @@ app.get('/api/stock/:code/history', async (req, res) => {
     }
 });
 
-// デバッグ用エンドポイント (環境変数確認)
-app.get('/api/debug', (req, res) => {
-    res.json({
-        keys: Object.keys(process.env).sort(),
-        has_jquants: !!process.env.JQUANTS_API_KEY,
-        has_vite_jquants: !!process.env.VITE_JQUANTS_API_KEY,
-        has_finnhub: !!process.env.VITE_FINNHUB_API_KEY,
-        node_env: process.env.NODE_ENV,
-        vercel_env: process.env.VERCEL_ENV
-    });
-});
-
 // ローカル開発時のみポートListen (Vercel環境ではexportされたappが使われる)
 if (require.main === module) {
     app.listen(PORT, () => {
