@@ -1,0 +1,1654 @@
+[
+    {
+        "code": "7203",
+        "nameJa": "トヨタ自動車",
+        "nameEn": "Toyota Motor",
+        "sector": "輸送用機器",
+        "market": "プライム"
+    },
+    {
+        "code": "6758",
+        "nameJa": "ソニーグループ",
+        "nameEn": "Sony Group",
+        "sector": "電気機器",
+        "market": "プライム"
+    },
+    {
+        "code": "7974",
+        "nameJa": "任天堂",
+        "nameEn": "Nintendo",
+        "sector": "その他製品",
+        "market": "プライム"
+    },
+    {
+        "code": "9984",
+        "nameJa": "ソフトバンクグループ",
+        "nameEn": "SoftBank Group",
+        "sector": "情報・通信業",
+        "market": "プライム"
+    },
+    {
+        "code": "6861",
+        "nameJa": "キーエンス",
+        "nameEn": "Keyence",
+        "sector": "電気機器",
+        "market": "プライム"
+    },
+    {
+        "code": "8306",
+        "nameJa": "三菱UFJフィナンシャル・グループ",
+        "nameEn": "Mitsubishi UFJ Financial Group",
+        "sector": "銀行業",
+        "market": "プライム"
+    },
+    {
+        "code": "9433",
+        "nameJa": "KDDI",
+        "nameEn": "KDDI",
+        "sector": "情報・通信業",
+        "market": "プライム"
+    },
+    {
+        "code": "9432",
+        "nameJa": "日本電信電話",
+        "nameEn": "Nippon Telegraph and Telephone",
+        "sector": "情報・通信業",
+        "market": "プライム"
+    },
+    {
+        "code": "6902",
+        "nameJa": "デンソー",
+        "nameEn": "DENSO",
+        "sector": "輸送用機器",
+        "market": "プライム"
+    },
+    {
+        "code": "7267",
+        "nameJa": "本田技研工業",
+        "nameEn": "Honda Motor",
+        "sector": "輸送用機器",
+        "market": "プライム"
+    },
+    {
+        "code": "7201",
+        "nameJa": "日産自動車",
+        "nameEn": "Nissan Motor",
+        "sector": "輸送用機器",
+        "market": "プライム"
+    },
+    {
+        "code": "8035",
+        "nameJa": "東京エレクトロン",
+        "nameEn": "Tokyo Electron",
+        "sector": "電気機器",
+        "market": "プライム"
+    },
+    {
+        "code": "6954",
+        "nameJa": "ファナック",
+        "nameEn": "FANUC",
+        "sector": "電気機器",
+        "market": "プライム"
+    },
+    {
+        "code": "4063",
+        "nameJa": "信越化学工業",
+        "nameEn": "Shin-Etsu Chemical",
+        "sector": "化学",
+        "market": "プライム"
+    },
+    {
+        "code": "4502",
+        "nameJa": "武田薬品工業",
+        "nameEn": "Takeda Pharmaceutical",
+        "sector": "医薬品",
+        "market": "プライム"
+    },
+    {
+        "code": "4503",
+        "nameJa": "アステラス製薬",
+        "nameEn": "Astellas Pharma",
+        "sector": "医薬品",
+        "market": "プライム"
+    },
+    {
+        "code": "4568",
+        "nameJa": "第一三共",
+        "nameEn": "Daiichi Sankyo",
+        "sector": "医薬品",
+        "market": "プライム"
+    },
+    {
+        "code": "8058",
+        "nameJa": "三菱商事",
+        "nameEn": "Mitsubishi Corporation",
+        "sector": "卸売業",
+        "market": "プライム"
+    },
+    {
+        "code": "8031",
+        "nameJa": "三井物産",
+        "nameEn": "Mitsui & Co",
+        "sector": "卸売業",
+        "market": "プライム"
+    },
+    {
+        "code": "8053",
+        "nameJa": "住友商事",
+        "nameEn": "Sumitomo Corporation",
+        "sector": "卸売業",
+        "market": "プライム"
+    },
+    {
+        "code": "8001",
+        "nameJa": "伊藤忠商事",
+        "nameEn": "ITOCHU Corporation",
+        "sector": "卸売業",
+        "market": "プライム"
+    },
+    {
+        "code": "8002",
+        "nameJa": "丸紅",
+        "nameEn": "Marubeni",
+        "sector": "卸売業",
+        "market": "プライム"
+    },
+    {
+        "code": "9020",
+        "nameJa": "東日本旅客鉄道",
+        "nameEn": "East Japan Railway",
+        "sector": "陸運業",
+        "market": "プライム"
+    },
+    {
+        "code": "9022",
+        "nameJa": "東海旅客鉄道",
+        "nameEn": "Central Japan Railway",
+        "sector": "陸運業",
+        "market": "プライム"
+    },
+    {
+        "code": "9021",
+        "nameJa": "西日本旅客鉄道",
+        "nameEn": "West Japan Railway",
+        "sector": "陸運業",
+        "market": "プライム"
+    },
+    {
+        "code": "9101",
+        "nameJa": "日本郵船",
+        "nameEn": "Nippon Yusen",
+        "sector": "海運業",
+        "market": "プライム"
+    },
+    {
+        "code": "9104",
+        "nameJa": "商船三井",
+        "nameEn": "Mitsui O.S.K. Lines",
+        "sector": "海運業",
+        "market": "プライム"
+    },
+    {
+        "code": "9202",
+        "nameJa": "ANAホールディングス",
+        "nameEn": "ANA Holdings",
+        "sector": "空運業",
+        "market": "プライム"
+    },
+    {
+        "code": "9201",
+        "nameJa": "日本航空",
+        "nameEn": "Japan Airlines",
+        "sector": "空運業",
+        "market": "プライム"
+    },
+    {
+        "code": "3382",
+        "nameJa": "セブン&アイ・ホールディングス",
+        "nameEn": "Seven & i Holdings",
+        "sector": "小売業",
+        "market": "プライム"
+    },
+    {
+        "code": "8267",
+        "nameJa": "イオン",
+        "nameEn": "AEON",
+        "sector": "小売業",
+        "market": "プライム"
+    },
+    {
+        "code": "9983",
+        "nameJa": "ファーストリテイリング",
+        "nameEn": "Fast Retailing",
+        "sector": "小売業",
+        "market": "プライム"
+    },
+    {
+        "code": "4755",
+        "nameJa": "楽天グループ",
+        "nameEn": "Rakuten Group",
+        "sector": "サービス業",
+        "market": "プライム"
+    },
+    {
+        "code": "2914",
+        "nameJa": "日本たばこ産業",
+        "nameEn": "Japan Tobacco",
+        "sector": "食料品",
+        "market": "プライム"
+    },
+    {
+        "code": "2801",
+        "nameJa": "キッコーマン",
+        "nameEn": "Kikkoman",
+        "sector": "食料品",
+        "market": "プライム"
+    },
+    {
+        "code": "2502",
+        "nameJa": "アサヒグループホールディングス",
+        "nameEn": "Asahi Group Holdings",
+        "sector": "食料品",
+        "market": "プライム"
+    },
+    {
+        "code": "2503",
+        "nameJa": "キリンホールディングス",
+        "nameEn": "Kirin Holdings",
+        "sector": "食料品",
+        "market": "プライム"
+    },
+    {
+        "code": "2501",
+        "nameJa": "サッポロホールディングス",
+        "nameEn": "Sapporo Holdings",
+        "sector": "食料品",
+        "market": "プライム"
+    },
+    {
+        "code": "2269",
+        "nameJa": "明治ホールディングス",
+        "nameEn": "Meiji Holdings",
+        "sector": "食料品",
+        "market": "プライム"
+    },
+    {
+        "code": "2802",
+        "nameJa": "味の素",
+        "nameEn": "Ajinomoto",
+        "sector": "食料品",
+        "market": "プライム"
+    },
+    {
+        "code": "4452",
+        "nameJa": "花王",
+        "nameEn": "Kao",
+        "sector": "化学",
+        "market": "プライム"
+    },
+    {
+        "code": "4911",
+        "nameJa": "資生堂",
+        "nameEn": "Shiseido",
+        "sector": "化学",
+        "market": "プライム"
+    },
+    {
+        "code": "5401",
+        "nameJa": "日本製鉄",
+        "nameEn": "Nippon Steel",
+        "sector": "鉄鋼",
+        "market": "プライム"
+    },
+    {
+        "code": "5411",
+        "nameJa": "JFEホールディングス",
+        "nameEn": "JFE Holdings",
+        "sector": "鉄鋼",
+        "market": "プライム"
+    },
+    {
+        "code": "5802",
+        "nameJa": "住友電気工業",
+        "nameEn": "Sumitomo Electric Industries",
+        "sector": "非鉄金属",
+        "market": "プライム"
+    },
+    {
+        "code": "5803",
+        "nameJa": "フジクラ",
+        "nameEn": "Fujikura",
+        "sector": "非鉄金属",
+        "market": "プライム"
+    },
+    {
+        "code": "6301",
+        "nameJa": "小松製作所",
+        "nameEn": "Komatsu",
+        "sector": "機械",
+        "market": "プライム"
+    },
+    {
+        "code": "6305",
+        "nameJa": "日立建機",
+        "nameEn": "Hitachi Construction Machinery",
+        "sector": "機械",
+        "market": "プライム"
+    },
+    {
+        "code": "6326",
+        "nameJa": "クボタ",
+        "nameEn": "Kubota",
+        "sector": "機械",
+        "market": "プライム"
+    },
+    {
+        "code": "6367",
+        "nameJa": "ダイキン工業",
+        "nameEn": "Daikin Industries",
+        "sector": "機械",
+        "market": "プライム"
+    },
+    {
+        "code": "6501",
+        "nameJa": "日立製作所",
+        "nameEn": "Hitachi",
+        "sector": "電気機器",
+        "market": "プライム"
+    },
+    {
+        "code": "6503",
+        "nameJa": "三菱電機",
+        "nameEn": "Mitsubishi Electric",
+        "sector": "電気機器",
+        "market": "プライム"
+    },
+    {
+        "code": "6504",
+        "nameJa": "富士電機",
+        "nameEn": "Fuji Electric",
+        "sector": "電気機器",
+        "market": "プライム"
+    },
+    {
+        "code": "6702",
+        "nameJa": "富士通",
+        "nameEn": "Fujitsu",
+        "sector": "電気機器",
+        "market": "プライム"
+    },
+    {
+        "code": "6752",
+        "nameJa": "パナソニック ホールディングス",
+        "nameEn": "Panasonic Holdings",
+        "sector": "電気機器",
+        "market": "プライム"
+    },
+    {
+        "code": "6762",
+        "nameJa": "TDK",
+        "nameEn": "TDK",
+        "sector": "電気機器",
+        "market": "プライム"
+    },
+    {
+        "code": "6971",
+        "nameJa": "京セラ",
+        "nameEn": "Kyocera",
+        "sector": "電気機器",
+        "market": "プライム"
+    },
+    {
+        "code": "6976",
+        "nameJa": "太陽誘電",
+        "nameEn": "Taiyo Yuden",
+        "sector": "電気機器",
+        "market": "プライム"
+    },
+    {
+        "code": "7751",
+        "nameJa": "キヤノン",
+        "nameEn": "Canon",
+        "sector": "電気機器",
+        "market": "プライム"
+    },
+    {
+        "code": "7752",
+        "nameJa": "リコー",
+        "nameEn": "Ricoh",
+        "sector": "電気機器",
+        "market": "プライム"
+    },
+    {
+        "code": "7733",
+        "nameJa": "オリンパス",
+        "nameEn": "Olympus",
+        "sector": "精密機器",
+        "market": "プライム"
+    },
+    {
+        "code": "7731",
+        "nameJa": "ニコン",
+        "nameEn": "Nikon",
+        "sector": "精密機器",
+        "market": "プライム"
+    },
+    {
+        "code": "4543",
+        "nameJa": "テルモ",
+        "nameEn": "Terumo",
+        "sector": "精密機器",
+        "market": "プライム"
+    },
+    {
+        "code": "3659",
+        "nameJa": "ネクソン",
+        "nameEn": "Nexon",
+        "sector": "情報・通信業",
+        "market": "プライム"
+    },
+    {
+        "code": "9697",
+        "nameJa": "カプコン",
+        "nameEn": "Capcom",
+        "sector": "情報・通信業",
+        "market": "プライム"
+    },
+    {
+        "code": "9684",
+        "nameJa": "スクウェア・エニックス・ホールディングス",
+        "nameEn": "Square Enix Holdings",
+        "sector": "情報・通信業",
+        "market": "プライム"
+    },
+    {
+        "code": "3765",
+        "nameJa": "ガンホー・オンライン・エンターテイメント",
+        "nameEn": "GungHo Online Entertainment",
+        "sector": "情報・通信業",
+        "market": "プライム"
+    },
+    {
+        "code": "4324",
+        "nameJa": "電通グループ",
+        "nameEn": "Dentsu Group",
+        "sector": "サービス業",
+        "market": "プライム"
+    },
+    {
+        "code": "2413",
+        "nameJa": "エムスリー",
+        "nameEn": "M3",
+        "sector": "サービス業",
+        "market": "プライム"
+    },
+    {
+        "code": "4661",
+        "nameJa": "オリエンタルランド",
+        "nameEn": "Oriental Land",
+        "sector": "サービス業",
+        "market": "プライム"
+    },
+    {
+        "code": "9602",
+        "nameJa": "東宝",
+        "nameEn": "Toho",
+        "sector": "情報・通信業",
+        "market": "プライム"
+    },
+    {
+        "code": "8316",
+        "nameJa": "三井住友フィナンシャルグループ",
+        "nameEn": "Sumitomo Mitsui Financial Group",
+        "sector": "銀行業",
+        "market": "プライム"
+    },
+    {
+        "code": "8411",
+        "nameJa": "みずほフィナンシャルグループ",
+        "nameEn": "Mizuho Financial Group",
+        "sector": "銀行業",
+        "market": "プライム"
+    },
+    {
+        "code": "8604",
+        "nameJa": "野村ホールディングス",
+        "nameEn": "Nomura Holdings",
+        "sector": "証券、商品先物取引業",
+        "market": "プライム"
+    },
+    {
+        "code": "8601",
+        "nameJa": "大和証券グループ本社",
+        "nameEn": "Daiwa Securities Group",
+        "sector": "証券、商品先物取引業",
+        "market": "プライム"
+    },
+    {
+        "code": "8766",
+        "nameJa": "東京海上ホールディングス",
+        "nameEn": "Tokio Marine Holdings",
+        "sector": "保険業",
+        "market": "プライム"
+    },
+    {
+        "code": "8750",
+        "nameJa": "第一生命ホールディングス",
+        "nameEn": "Dai-ichi Life Holdings",
+        "sector": "保険業",
+        "market": "プライム"
+    },
+    {
+        "code": "8725",
+        "nameJa": "MS&ADインシュアランスグループホールディングス",
+        "nameEn": "MS&AD Insurance Group Holdings",
+        "sector": "保険業",
+        "market": "プライム"
+    },
+    {
+        "code": "8802",
+        "nameJa": "三菱地所",
+        "nameEn": "Mitsubishi Estate",
+        "sector": "不動産業",
+        "market": "プライム"
+    },
+    {
+        "code": "8801",
+        "nameJa": "三井不動産",
+        "nameEn": "Mitsui Fudosan",
+        "sector": "不動産業",
+        "market": "プライム"
+    },
+    {
+        "code": "8830",
+        "nameJa": "住友不動産",
+        "nameEn": "Sumitomo Realty & Development",
+        "sector": "不動産業",
+        "market": "プライム"
+    },
+    {
+        "code": "1925",
+        "nameJa": "大和ハウス工業",
+        "nameEn": "Daiwa House Industry",
+        "sector": "建設業",
+        "market": "プライム"
+    },
+    {
+        "code": "1928",
+        "nameJa": "積水ハウス",
+        "nameEn": "Sekisui House",
+        "sector": "建設業",
+        "market": "プライム"
+    },
+    {
+        "code": "1801",
+        "nameJa": "大成建設",
+        "nameEn": "Taisei Corporation",
+        "sector": "建設業",
+        "market": "プライム"
+    },
+    {
+        "code": "1802",
+        "nameJa": "大林組",
+        "nameEn": "Obayashi Corporation",
+        "sector": "建設業",
+        "market": "プライム"
+    },
+    {
+        "code": "1803",
+        "nameJa": "清水建設",
+        "nameEn": "Shimizu Corporation",
+        "sector": "建設業",
+        "market": "プライム"
+    },
+    {
+        "code": "1812",
+        "nameJa": "鹿島建設",
+        "nameEn": "Kajima Corporation",
+        "sector": "建設業",
+        "market": "プライム"
+    },
+    {
+        "code": "5020",
+        "nameJa": "ENEOSホールディングス",
+        "nameEn": "ENEOS Holdings",
+        "sector": "石油・石炭製品",
+        "market": "プライム"
+    },
+    {
+        "code": "5019",
+        "nameJa": "出光興産",
+        "nameEn": "Idemitsu Kosan",
+        "sector": "石油・石炭製品",
+        "market": "プライム"
+    },
+    {
+        "code": "9531",
+        "nameJa": "東京ガス",
+        "nameEn": "Tokyo Gas",
+        "sector": "電気・ガス業",
+        "market": "プライム"
+    },
+    {
+        "code": "9532",
+        "nameJa": "大阪ガス",
+        "nameEn": "Osaka Gas",
+        "sector": "電気・ガス業",
+        "market": "プライム"
+    },
+    {
+        "code": "9501",
+        "nameJa": "東京電力ホールディングス",
+        "nameEn": "Tokyo Electric Power Company Holdings",
+        "sector": "電気・ガス業",
+        "market": "プライム"
+    },
+    {
+        "code": "9503",
+        "nameJa": "関西電力",
+        "nameEn": "Kansai Electric Power",
+        "sector": "電気・ガス業",
+        "market": "プライム"
+    },
+    {
+        "code": "9502",
+        "nameJa": "中部電力",
+        "nameEn": "Chubu Electric Power",
+        "sector": "電気・ガス業",
+        "market": "プライム"
+    },
+    {
+        "code": "2181",
+        "nameJa": "パーソルホールディングス",
+        "nameEn": "PERSOL Holdings",
+        "sector": "サービス業",
+        "market": "プライム"
+    },
+    {
+        "code": "6098",
+        "nameJa": "リクルートホールディングス",
+        "nameEn": "Recruit Holdings",
+        "sector": "サービス業",
+        "market": "プライム"
+    },
+    {
+        "code": "2168",
+        "nameJa": "パソナグループ",
+        "nameEn": "Pasona Group",
+        "sector": "サービス業",
+        "market": "プライム"
+    },
+    {
+        "code": "4751",
+        "nameJa": "サイバーエージェント",
+        "nameEn": "CyberAgent",
+        "sector": "サービス業",
+        "market": "プライム"
+    },
+    {
+        "code": "2432",
+        "nameJa": "ディー・エヌ・エー",
+        "nameEn": "DeNA",
+        "sector": "サービス業",
+        "market": "プライム"
+    },
+    {
+        "code": "4385",
+        "nameJa": "メルカリ",
+        "nameEn": "Mercari",
+        "sector": "サービス業",
+        "market": "プライム"
+    },
+    {
+        "code": "4519",
+        "nameJa": "中外製薬",
+        "nameEn": "Chugai Pharmaceutical",
+        "sector": "医薬品",
+        "market": "プライム"
+    },
+    {
+        "code": "4523",
+        "nameJa": "エーザイ",
+        "nameEn": "Eisai",
+        "sector": "医薬品",
+        "market": "プライム"
+    },
+    {
+        "code": "4507",
+        "nameJa": "塩野義製薬",
+        "nameEn": "Shionogi",
+        "sector": "医薬品",
+        "market": "プライム"
+    },
+    {
+        "code": "4578",
+        "nameJa": "大塚ホールディングス",
+        "nameEn": "Otsuka Holdings",
+        "sector": "医薬品",
+        "market": "プライム"
+    },
+    {
+        "code": "3289",
+        "nameJa": "東急不動産ホールディングス",
+        "nameEn": "Tokyu Fudosan Holdings",
+        "sector": "不動産業",
+        "market": "プライム"
+    },
+    {
+        "code": "3231",
+        "nameJa": "野村不動産ホールディングス",
+        "nameEn": "Nomura Real Estate Holdings",
+        "sector": "不動産業",
+        "market": "プライム"
+    },
+    {
+        "code": "9434",
+        "nameJa": "ソフトバンク",
+        "nameEn": "SoftBank",
+        "sector": "情報・通信業",
+        "market": "プライム"
+    },
+    {
+        "code": "6178",
+        "nameJa": "日本郵政",
+        "nameEn": "Japan Post Holdings",
+        "sector": "サービス業",
+        "market": "プライム"
+    },
+    {
+        "code": "7182",
+        "nameJa": "ゆうちょ銀行",
+        "nameEn": "Japan Post Bank",
+        "sector": "銀行業",
+        "market": "プライム"
+    },
+    {
+        "code": "7181",
+        "nameJa": "かんぽ生命保険",
+        "nameEn": "Japan Post Insurance",
+        "sector": "保険業",
+        "market": "プライム"
+    },
+    {
+        "code": "9613",
+        "nameJa": "エヌ・ティ・ティ・データ",
+        "nameEn": "NTT Data",
+        "sector": "情報・通信業",
+        "market": "プライム"
+    },
+    {
+        "code": "4704",
+        "nameJa": "トレンドマイクロ",
+        "nameEn": "Trend Micro",
+        "sector": "情報・通信業",
+        "market": "プライム"
+    },
+    {
+        "code": "3659",
+        "nameJa": "ネクソン",
+        "nameEn": "Nexon",
+        "sector": "情報・通信業",
+        "market": "プライム"
+    },
+    {
+        "code": "3765",
+        "nameJa": "ガンホー・オンライン・エンターテイメント",
+        "nameEn": "GungHo Online Entertainment",
+        "sector": "情報・通信業",
+        "market": "プライム"
+    },
+    {
+        "code": "9697",
+        "nameJa": "カプコン",
+        "nameEn": "Capcom",
+        "sector": "情報・通信業",
+        "market": "プライム"
+    },
+    {
+        "code": "9684",
+        "nameJa": "スクウェア・エニックス・ホールディングス",
+        "nameEn": "Square Enix Holdings",
+        "sector": "情報・通信業",
+        "market": "プライム"
+    },
+    {
+        "code": "7832",
+        "nameJa": "バンダイナムコホールディングス",
+        "nameEn": "Bandai Namco Holdings",
+        "sector": "その他製品",
+        "market": "プライム"
+    },
+    {
+        "code": "6645",
+        "nameJa": "オムロン",
+        "nameEn": "Omron",
+        "sector": "電気機器",
+        "market": "プライム"
+    },
+    {
+        "code": "6594",
+        "nameJa": "日本電産",
+        "nameEn": "Nidec",
+        "sector": "電気機器",
+        "market": "プライム"
+    },
+    {
+        "code": "6981",
+        "nameJa": "村田製作所",
+        "nameEn": "Murata Manufacturing",
+        "sector": "電気機器",
+        "market": "プライム"
+    },
+    {
+        "code": "6857",
+        "nameJa": "アドバンテスト",
+        "nameEn": "Advantest",
+        "sector": "電気機器",
+        "market": "プライム"
+    },
+    {
+        "code": "6723",
+        "nameJa": "ルネサスエレクトロニクス",
+        "nameEn": "Renesas Electronics",
+        "sector": "電気機器",
+        "market": "プライム"
+    },
+    {
+        "code": "6920",
+        "nameJa": "レーザーテック",
+        "nameEn": "Lasertec",
+        "sector": "電気機器",
+        "market": "プライム"
+    },
+    {
+        "code": "6273",
+        "nameJa": "SMC",
+        "nameEn": "SMC",
+        "sector": "機械",
+        "market": "プライム"
+    },
+    {
+        "code": "6471",
+        "nameJa": "日本精工",
+        "nameEn": "NSK",
+        "sector": "機械",
+        "market": "プライム"
+    },
+    {
+        "code": "7011",
+        "nameJa": "三菱重工業",
+        "nameEn": "Mitsubishi Heavy Industries",
+        "sector": "機械",
+        "market": "プライム"
+    },
+    {
+        "code": "7012",
+        "nameJa": "川崎重工業",
+        "nameEn": "Kawasaki Heavy Industries",
+        "sector": "機械",
+        "market": "プライム"
+    },
+    {
+        "code": "7013",
+        "nameJa": "IHI",
+        "nameEn": "IHI",
+        "sector": "機械",
+        "market": "プライム"
+    },
+    {
+        "code": "7270",
+        "nameJa": "SUBARU",
+        "nameEn": "Subaru",
+        "sector": "輸送用機器",
+        "market": "プライム"
+    },
+    {
+        "code": "7261",
+        "nameJa": "マツダ",
+        "nameEn": "Mazda Motor",
+        "sector": "輸送用機器",
+        "market": "プライム"
+    },
+    {
+        "code": "7269",
+        "nameJa": "スズキ",
+        "nameEn": "Suzuki Motor",
+        "sector": "輸送用機器",
+        "market": "プライム"
+    },
+    {
+        "code": "7272",
+        "nameJa": "ヤマハ発動機",
+        "nameEn": "Yamaha Motor",
+        "sector": "輸送用機器",
+        "market": "プライム"
+    },
+    {
+        "code": "5108",
+        "nameJa": "ブリヂストン",
+        "nameEn": "Bridgestone",
+        "sector": "ゴム製品",
+        "market": "プライム"
+    },
+    {
+        "code": "4188",
+        "nameJa": "三菱ケミカルグループ",
+        "nameEn": "Mitsubishi Chemical Group",
+        "sector": "化学",
+        "market": "プライム"
+    },
+    {
+        "code": "4005",
+        "nameJa": "住友化学",
+        "nameEn": "Sumitomo Chemical",
+        "sector": "化学",
+        "market": "プライム"
+    },
+    {
+        "code": "4183",
+        "nameJa": "三井化学",
+        "nameEn": "Mitsui Chemicals",
+        "sector": "化学",
+        "market": "プライム"
+    },
+    {
+        "code": "4208",
+        "nameJa": "宇部興産",
+        "nameEn": "Ube Industries",
+        "sector": "化学",
+        "market": "プライム"
+    },
+    {
+        "code": "4021",
+        "nameJa": "日産化学",
+        "nameEn": "Nissan Chemical",
+        "sector": "化学",
+        "market": "プライム"
+    },
+    {
+        "code": "3861",
+        "nameJa": "王子ホールディングス",
+        "nameEn": "Oji Holdings",
+        "sector": "パルプ・紙",
+        "market": "プライム"
+    },
+    {
+        "code": "3863",
+        "nameJa": "日本製紙",
+        "nameEn": "Nippon Paper Industries",
+        "sector": "パルプ・紙",
+        "market": "プライム"
+    },
+    {
+        "code": "3407",
+        "nameJa": "旭化成",
+        "nameEn": "Asahi Kasei",
+        "sector": "化学",
+        "market": "プライム"
+    },
+    {
+        "code": "3402",
+        "nameJa": "東レ",
+        "nameEn": "Toray Industries",
+        "sector": "繊維製品",
+        "market": "プライム"
+    },
+    {
+        "code": "3401",
+        "nameJa": "帝人",
+        "nameEn": "Teijin",
+        "sector": "繊維製品",
+        "market": "プライム"
+    },
+    {
+        "code": "5332",
+        "nameJa": "TOTO",
+        "nameEn": "TOTO",
+        "sector": "ガラス・土石製品",
+        "market": "プライム"
+    },
+    {
+        "code": "5333",
+        "nameJa": "日本碍子",
+        "nameEn": "NGK Insulators",
+        "sector": "ガラス・土石製品",
+        "market": "プライム"
+    },
+    {
+        "code": "5201",
+        "nameJa": "AGC",
+        "nameEn": "AGC",
+        "sector": "ガラス・土石製品",
+        "market": "プライム"
+    },
+    {
+        "code": "5214",
+        "nameJa": "日本電気硝子",
+        "nameEn": "Nippon Electric Glass",
+        "sector": "ガラス・土石製品",
+        "market": "プライム"
+    },
+    {
+        "code": "5101",
+        "nameJa": "横浜ゴム",
+        "nameEn": "Yokohama Rubber",
+        "sector": "ゴム製品",
+        "market": "プライム"
+    },
+    {
+        "code": "5703",
+        "nameJa": "日本軽金属ホールディングス",
+        "nameEn": "Nippon Light Metal Holdings",
+        "sector": "非鉄金属",
+        "market": "プライム"
+    },
+    {
+        "code": "5711",
+        "nameJa": "三菱マテリアル",
+        "nameEn": "Mitsubishi Materials",
+        "sector": "非鉄金属",
+        "market": "プライム"
+    },
+    {
+        "code": "5713",
+        "nameJa": "住友金属鉱山",
+        "nameEn": "Sumitomo Metal Mining",
+        "sector": "非鉄金属",
+        "market": "プライム"
+    },
+    {
+        "code": "5714",
+        "nameJa": "DOWAホールディングス",
+        "nameEn": "DOWA Holdings",
+        "sector": "非鉄金属",
+        "market": "プライム"
+    },
+    {
+        "code": "5801",
+        "nameJa": "古河電気工業",
+        "nameEn": "Furukawa Electric",
+        "sector": "非鉄金属",
+        "market": "プライム"
+    },
+    {
+        "code": "9005",
+        "nameJa": "東急",
+        "nameEn": "Tokyu",
+        "sector": "陸運業",
+        "market": "プライム"
+    },
+    {
+        "code": "9007",
+        "nameJa": "小田急電鉄",
+        "nameEn": "Odakyu Electric Railway",
+        "sector": "陸運業",
+        "market": "プライム"
+    },
+    {
+        "code": "9008",
+        "nameJa": "京王電鉄",
+        "nameEn": "Keio",
+        "sector": "陸運業",
+        "market": "プライム"
+    },
+    {
+        "code": "9009",
+        "nameJa": "京成電鉄",
+        "nameEn": "Keisei Electric Railway",
+        "sector": "陸運業",
+        "market": "プライム"
+    },
+    {
+        "code": "9001",
+        "nameJa": "東武鉄道",
+        "nameEn": "Tobu Railway",
+        "sector": "陸運業",
+        "market": "プライム"
+    },
+    {
+        "code": "9003",
+        "nameJa": "相鉄ホールディングス",
+        "nameEn": "Sotetsu Holdings",
+        "sector": "陸運業",
+        "market": "プライム"
+    },
+    {
+        "code": "9064",
+        "nameJa": "ヤマトホールディングス",
+        "nameEn": "Yamato Holdings",
+        "sector": "陸運業",
+        "market": "プライム"
+    },
+    {
+        "code": "9062",
+        "nameJa": "日本通運",
+        "nameEn": "Nippon Express",
+        "sector": "陸運業",
+        "market": "プライム"
+    },
+    {
+        "code": "9107",
+        "nameJa": "川崎汽船",
+        "nameEn": "Kawasaki Kisen Kaisha",
+        "sector": "海運業",
+        "market": "プライム"
+    },
+    {
+        "code": "9301",
+        "nameJa": "三菱倉庫",
+        "nameEn": "Mitsubishi Logistics",
+        "sector": "倉庫・運輸関連業",
+        "market": "プライム"
+    },
+    {
+        "code": "9302",
+        "nameJa": "三井倉庫ホールディングス",
+        "nameEn": "Mitsui-Soko Holdings",
+        "sector": "倉庫・運輸関連業",
+        "market": "プライム"
+    },
+    {
+        "code": "8795",
+        "nameJa": "T&Dホールディングス",
+        "nameEn": "T&D Holdings",
+        "sector": "保険業",
+        "market": "プライム"
+    },
+    {
+        "code": "8630",
+        "nameJa": "SOMPOホールディングス",
+        "nameEn": "Sompo Holdings",
+        "sector": "保険業",
+        "market": "プライム"
+    },
+    {
+        "code": "8308",
+        "nameJa": "りそなホールディングス",
+        "nameEn": "Resona Holdings",
+        "sector": "銀行業",
+        "market": "プライム"
+    },
+    {
+        "code": "8309",
+        "nameJa": "三井住友トラスト・ホールディングス",
+        "nameEn": "Sumitomo Mitsui Trust Holdings",
+        "sector": "銀行業",
+        "market": "プライム"
+    },
+    {
+        "code": "8331",
+        "nameJa": "千葉銀行",
+        "nameEn": "Chiba Bank",
+        "sector": "銀行業",
+        "market": "プライム"
+    },
+    {
+        "code": "8354",
+        "nameJa": "ふくおかフィナンシャルグループ",
+        "nameEn": "Fukuoka Financial Group",
+        "sector": "銀行業",
+        "market": "プライム"
+    },
+    {
+        "code": "8355",
+        "nameJa": "静岡銀行",
+        "nameEn": "Shizuoka Bank",
+        "sector": "銀行業",
+        "market": "プライム"
+    },
+    {
+        "code": "8591",
+        "nameJa": "オリックス",
+        "nameEn": "Orix",
+        "sector": "その他金融業",
+        "market": "プライム"
+    },
+    {
+        "code": "8253",
+        "nameJa": "クレディセゾン",
+        "nameEn": "Credit Saison",
+        "sector": "その他金融業",
+        "market": "プライム"
+    },
+    {
+        "code": "8252",
+        "nameJa": "丸井グループ",
+        "nameEn": "Marui Group",
+        "sector": "小売業",
+        "market": "プライム"
+    },
+    {
+        "code": "3086",
+        "nameJa": "J.フロント リテイリング",
+        "nameEn": "J.Front Retailing",
+        "sector": "小売業",
+        "market": "プライム"
+    },
+    {
+        "code": "3099",
+        "nameJa": "三越伊勢丹ホールディングス",
+        "nameEn": "Isetan Mitsukoshi Holdings",
+        "sector": "小売業",
+        "market": "プライム"
+    },
+    {
+        "code": "8233",
+        "nameJa": "高島屋",
+        "nameEn": "Takashimaya",
+        "sector": "小売業",
+        "market": "プライム"
+    },
+    {
+        "code": "3048",
+        "nameJa": "ビックカメラ",
+        "nameEn": "Bic Camera",
+        "sector": "小売業",
+        "market": "プライム"
+    },
+    {
+        "code": "9983",
+        "nameJa": "ファーストリテイリング",
+        "nameEn": "Fast Retailing",
+        "sector": "小売業",
+        "market": "プライム"
+    },
+    {
+        "code": "9843",
+        "nameJa": "ニトリホールディングス",
+        "nameEn": "Nitori Holdings",
+        "sector": "小売業",
+        "market": "プライム"
+    },
+    {
+        "code": "7453",
+        "nameJa": "良品計画",
+        "nameEn": "Ryohin Keikaku",
+        "sector": "小売業",
+        "market": "プライム"
+    },
+    {
+        "code": "3382",
+        "nameJa": "セブン&アイ・ホールディングス",
+        "nameEn": "Seven & i Holdings",
+        "sector": "小売業",
+        "market": "プライム"
+    },
+    {
+        "code": "8267",
+        "nameJa": "イオン",
+        "nameEn": "AEON",
+        "sector": "小売業",
+        "market": "プライム"
+    },
+    {
+        "code": "3349",
+        "nameJa": "コスモス薬品",
+        "nameEn": "Cosmos Pharmaceutical",
+        "sector": "小売業",
+        "market": "プライム"
+    },
+    {
+        "code": "3391",
+        "nameJa": "ツルハホールディングス",
+        "nameEn": "Tsuruha Holdings",
+        "sector": "小売業",
+        "market": "プライム"
+    },
+    {
+        "code": "2670",
+        "nameJa": "エービーシー・マート",
+        "nameEn": "ABC-Mart",
+        "sector": "小売業",
+        "market": "プライム"
+    },
+    {
+        "code": "7606",
+        "nameJa": "ユナイテッドアローズ",
+        "nameEn": "United Arrows",
+        "sector": "小売業",
+        "market": "プライム"
+    },
+    {
+        "code": "9831",
+        "nameJa": "ヤマダホールディングス",
+        "nameEn": "Yamada Holdings",
+        "sector": "小売業",
+        "market": "プライム"
+    },
+    {
+        "code": "7832",
+        "nameJa": "バンダイナムコホールディングス",
+        "nameEn": "Bandai Namco Holdings",
+        "sector": "その他製品",
+        "market": "プライム"
+    },
+    {
+        "code": "6645",
+        "nameJa": "オムロン",
+        "nameEn": "Omron",
+        "sector": "電気機器",
+        "market": "プライム"
+    },
+    {
+        "code": "6594",
+        "nameJa": "日本電産",
+        "nameEn": "Nidec",
+        "sector": "電気機器",
+        "market": "プライム"
+    },
+    {
+        "code": "6981",
+        "nameJa": "村田製作所",
+        "nameEn": "Murata Manufacturing",
+        "sector": "電気機器",
+        "market": "プライム"
+    },
+    {
+        "code": "6857",
+        "nameJa": "アドバンテスト",
+        "nameEn": "Advantest",
+        "sector": "電気機器",
+        "market": "プライム"
+    },
+    {
+        "code": "6723",
+        "nameJa": "ルネサスエレクトロニクス",
+        "nameEn": "Renesas Electronics",
+        "sector": "電気機器",
+        "market": "プライム"
+    },
+    {
+        "code": "6920",
+        "nameJa": "レーザーテック",
+        "nameEn": "Lasertec",
+        "sector": "電気機器",
+        "market": "プライム"
+    },
+    {
+        "code": "6273",
+        "nameJa": "SMC",
+        "nameEn": "SMC",
+        "sector": "機械",
+        "market": "プライム"
+    },
+    {
+        "code": "6471",
+        "nameJa": "日本精工",
+        "nameEn": "NSK",
+        "sector": "機械",
+        "market": "プライム"
+    },
+    {
+        "code": "7011",
+        "nameJa": "三菱重工業",
+        "nameEn": "Mitsubishi Heavy Industries",
+        "sector": "機械",
+        "market": "プライム"
+    },
+    {
+        "code": "7012",
+        "nameJa": "川崎重工業",
+        "nameEn": "Kawasaki Heavy Industries",
+        "sector": "機械",
+        "market": "プライム"
+    },
+    {
+        "code": "7013",
+        "nameJa": "IHI",
+        "nameEn": "IHI",
+        "sector": "機械",
+        "market": "プライム"
+    },
+    {
+        "code": "7270",
+        "nameJa": "SUBARU",
+        "nameEn": "Subaru",
+        "sector": "輸送用機器",
+        "market": "プライム"
+    },
+    {
+        "code": "7261",
+        "nameJa": "マツダ",
+        "nameEn": "Mazda Motor",
+        "sector": "輸送用機器",
+        "market": "プライム"
+    },
+    {
+        "code": "7269",
+        "nameJa": "スズキ",
+        "nameEn": "Suzuki Motor",
+        "sector": "輸送用機器",
+        "market": "プライム"
+    },
+    {
+        "code": "7272",
+        "nameJa": "ヤマハ発動機",
+        "nameEn": "Yamaha Motor",
+        "sector": "輸送用機器",
+        "market": "プライム"
+    },
+    {
+        "code": "5108",
+        "nameJa": "ブリヂストン",
+        "nameEn": "Bridgestone",
+        "sector": "ゴム製品",
+        "market": "プライム"
+    },
+    {
+        "code": "4188",
+        "nameJa": "三菱ケミカルグループ",
+        "nameEn": "Mitsubishi Chemical Group",
+        "sector": "化学",
+        "market": "プライム"
+    },
+    {
+        "code": "4005",
+        "nameJa": "住友化学",
+        "nameEn": "Sumitomo Chemical",
+        "sector": "化学",
+        "market": "プライム"
+    },
+    {
+        "code": "4183",
+        "nameJa": "三井化学",
+        "nameEn": "Mitsui Chemicals",
+        "sector": "化学",
+        "market": "プライム"
+    },
+    {
+        "code": "4208",
+        "nameJa": "宇部興産",
+        "nameEn": "Ube Industries",
+        "sector": "化学",
+        "market": "プライム"
+    },
+    {
+        "code": "4021",
+        "nameJa": "日産化学",
+        "nameEn": "Nissan Chemical",
+        "sector": "化学",
+        "market": "プライム"
+    },
+    {
+        "code": "3861",
+        "nameJa": "王子ホールディングス",
+        "nameEn": "Oji Holdings",
+        "sector": "パルプ・紙",
+        "market": "プライム"
+    },
+    {
+        "code": "3863",
+        "nameJa": "日本製紙",
+        "nameEn": "Nippon Paper Industries",
+        "sector": "パルプ・紙",
+        "market": "プライム"
+    },
+    {
+        "code": "3407",
+        "nameJa": "旭化成",
+        "nameEn": "Asahi Kasei",
+        "sector": "化学",
+        "market": "プライム"
+    },
+    {
+        "code": "3402",
+        "nameJa": "東レ",
+        "nameEn": "Toray Industries",
+        "sector": "繊維製品",
+        "market": "プライム"
+    },
+    {
+        "code": "3401",
+        "nameJa": "帝人",
+        "nameEn": "Teijin",
+        "sector": "繊維製品",
+        "market": "プライム"
+    },
+    {
+        "code": "5332",
+        "nameJa": "TOTO",
+        "nameEn": "TOTO",
+        "sector": "ガラス・土石製品",
+        "market": "プライム"
+    },
+    {
+        "code": "5333",
+        "nameJa": "日本碍子",
+        "nameEn": "NGK Insulators",
+        "sector": "ガラス・土石製品",
+        "market": "プライム"
+    },
+    {
+        "code": "5201",
+        "nameJa": "AGC",
+        "nameEn": "AGC",
+        "sector": "ガラス・土石製品",
+        "market": "プライム"
+    },
+    {
+        "code": "5214",
+        "nameJa": "日本電気硝子",
+        "nameEn": "Nippon Electric Glass",
+        "sector": "ガラス・土石製品",
+        "market": "プライム"
+    },
+    {
+        "code": "5101",
+        "nameJa": "横浜ゴム",
+        "nameEn": "Yokohama Rubber",
+        "sector": "ゴム製品",
+        "market": "プライム"
+    },
+    {
+        "code": "5703",
+        "nameJa": "日本軽金属ホールディングス",
+        "nameEn": "Nippon Light Metal Holdings",
+        "sector": "非鉄金属",
+        "market": "プライム"
+    },
+    {
+        "code": "5711",
+        "nameJa": "三菱マテリアル",
+        "nameEn": "Mitsubishi Materials",
+        "sector": "非鉄金属",
+        "market": "プライム"
+    },
+    {
+        "code": "5713",
+        "nameJa": "住友金属鉱山",
+        "nameEn": "Sumitomo Metal Mining",
+        "sector": "非鉄金属",
+        "market": "プライム"
+    },
+    {
+        "code": "5714",
+        "nameJa": "DOWAホールディングス",
+        "nameEn": "DOWA Holdings",
+        "sector": "非鉄金属",
+        "market": "プライム"
+    },
+    {
+        "code": "5801",
+        "nameJa": "古河電気工業",
+        "nameEn": "Furukawa Electric",
+        "sector": "非鉄金属",
+        "market": "プライム"
+    },
+    {
+        "code": "9005",
+        "nameJa": "東急",
+        "nameEn": "Tokyu",
+        "sector": "陸運業",
+        "market": "プライム"
+    },
+    {
+        "code": "9007",
+        "nameJa": "小田急電鉄",
+        "nameEn": "Odakyu Electric Railway",
+        "sector": "陸運業",
+        "market": "プライム"
+    },
+    {
+        "code": "9008",
+        "nameJa": "京王電鉄",
+        "nameEn": "Keio",
+        "sector": "陸運業",
+        "market": "プライム"
+    },
+    {
+        "code": "9009",
+        "nameJa": "京成電鉄",
+        "nameEn": "Keisei Electric Railway",
+        "sector": "陸運業",
+        "market": "プライム"
+    },
+    {
+        "code": "9001",
+        "nameJa": "東武鉄道",
+        "nameEn": "Tobu Railway",
+        "sector": "陸運業",
+        "market": "プライム"
+    },
+    {
+        "code": "9003",
+        "nameJa": "相鉄ホールディングス",
+        "nameEn": "Sotetsu Holdings",
+        "sector": "陸運業",
+        "market": "プライム"
+    },
+    {
+        "code": "9064",
+        "nameJa": "ヤマトホールディングス",
+        "nameEn": "Yamato Holdings",
+        "sector": "陸運業",
+        "market": "プライム"
+    },
+    {
+        "code": "9062",
+        "nameJa": "日本通運",
+        "nameEn": "Nippon Express",
+        "sector": "陸運業",
+        "market": "プライム"
+    },
+    {
+        "code": "9107",
+        "nameJa": "川崎汽船",
+        "nameEn": "Kawasaki Kisen Kaisha",
+        "sector": "海運業",
+        "market": "プライム"
+    },
+    {
+        "code": "9301",
+        "nameJa": "三菱倉庫",
+        "nameEn": "Mitsubishi Logistics",
+        "sector": "倉庫・運輸関連業",
+        "market": "プライム"
+    },
+    {
+        "code": "9302",
+        "nameJa": "三井倉庫ホールディングス",
+        "nameEn": "Mitsui-Soko Holdings",
+        "sector": "倉庫・運輸関連業",
+        "market": "プライム"
+    }
+]
