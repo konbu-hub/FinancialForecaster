@@ -253,7 +253,7 @@ function App() {
           borderTop: '1px solid var(--glass-border)',
         }}
       >
-        <p style={{ color: 'var(--color-gray-500)', fontSize: '0.875rem' }}>
+        <p style={{ color: 'var(--color-gray-600)', fontSize: '0.75rem', opacity: 0.5 }}>
           Powered by AI • CoinGecko • News API
         </p>
       </footer>
