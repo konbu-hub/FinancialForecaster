@@ -15,7 +15,7 @@ const JQUANTS_API_URL = 'https://api.jquants.com/v2';
 
 // J-Quants API呼び出しヘルパー
 async function fetchJQuantsData(code, from, to) {
-    const apiKey = process.env.JQUANTS_API_KEY;
+    const apiKey = process.env.JQUANTS_API_KEY || process.env.VITE_JQUANTS_API_KEY;
     if (!apiKey) {
         throw new Error('JQUANTS_API_KEY is not set');
     }
@@ -140,8 +140,8 @@ app.get('/api/stock/:code', async (req, res) => {
             error: 'Failed to fetch stock data',
             debug_message: error.message,
             debug_details: error.response?.data || 'No response data',
-            env_vars_available: Object.keys(process.env).filter(k => !k.includes('SECRET') && !k.includes('KEY')), // セキュリティのためキー名だけ（値は隠す）、API_KEY系も除外したいが...確認のため出す
-            has_jquants_key: !!process.env.JQUANTS_API_KEY
+            env_vars_available: Object.keys(process.env).filter(k => !k.includes('SECRET') && !k.includes('KEY')),
+            has_jquants_key: !!(process.env.JQUANTS_API_KEY || process.env.VITE_JQUANTS_API_KEY)
         });
     }
 });
