@@ -47,6 +47,14 @@ Due to the constraints of the J-Quants Free Plan, the data is provided with a **
 
 ![XRP Verification](/C:/Users/konbu/.gemini/antigravity/brain/06070818-4aef-447c-acb9-662d862c4464/xrp_verification_retry_1768392928945.png)
 
+## Environment Configuration (Production)
+To ensure correct data fetching in production (or when accessing from other devices), set the following environment variable:
+
+```env
+VITE_API_BASE_URL=https://your-production-api-url.com
+```
+*If not set, it defaults to `http://localhost:3001` (Development).*
+
 ## Next Steps
-- Consider adding a UI indicator for "Delayed Data" (JP) vs "Real-time" (US - Current Price).
-- All features verified. Changes pushed to GitHub.
+- Push changes to repository.
+- Deploy to production and verified with env var set.
