@@ -120,14 +120,14 @@ export default function SearchBar({ onSearch }: SearchBarProps) {
             <div style={{ display: 'flex', gap: '1rem', marginBottom: '1rem', justifyContent: 'center' }}>
                 <button
                     className={`btn ${assetType === 'crypto' ? 'btn-primary' : 'btn-secondary'}`}
-                    onClick={() => setAssetType('crypto')}
+                    onClick={() => handleTypeChange('crypto')}
                     style={{ minWidth: '150px' }}
                 >
                     🪙 仮想通貨
                 </button>
                 <button
                     className={`btn ${assetType === 'stock' ? 'btn-primary' : 'btn-secondary'}`}
-                    onClick={() => setAssetType('stock')}
+                    onClick={() => handleTypeChange('stock')}
                     style={{ minWidth: '150px' }}
                 >
                     🏢 株式
