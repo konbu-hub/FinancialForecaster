@@ -196,7 +196,11 @@ function App() {
                 現在価格
               </p>
               <p className="glow-text-green" style={{ fontSize: '1.5rem', fontWeight: 700 }}>
-                {formatCurrency(convertCurrency(currentPrice, 'USD', currency, exchangeRates), currency)}
+                {(() => {
+                  // 日本株の場合はJPY、米国株・仮想通貨の場合はUSD
+                  const sourceCurrency = (assetType === 'stock' && stockData?.country === 'JP') ? 'JPY' : 'USD';
+                  return formatCurrency(convertCurrency(currentPrice, sourceCurrency, currency, exchangeRates), currency);
+                })()}
               </p>
             </div>
             <div>
@@ -237,6 +241,7 @@ function App() {
               color="#00f0ff"
               currency={currency}
               exchangeRates={exchangeRates}
+              sourceCurrency={(assetType === 'stock' && stockData?.country === 'JP') ? 'JPY' : 'USD'}
             />
           </div>
 
@@ -250,6 +255,7 @@ function App() {
                   title="今後1年間のAI価格予測"
                   currency={currency}
                   exchangeRates={exchangeRates}
+                  sourceCurrency={(assetType === 'stock' && stockData?.country === 'JP') ? 'JPY' : 'USD'}
                 />
               </div>
 

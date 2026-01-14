@@ -23,6 +23,7 @@ interface PriceChartProps {
     color?: string;
     currency?: string;
     exchangeRates?: { [key: string]: number };
+    sourceCurrency?: string; // 元の通貨（JPYまたはUSD）
 }
 
 export default function PriceChart({
@@ -30,7 +31,8 @@ export default function PriceChart({
     title,
     color = '#00f0ff',
     currency = 'JPY',
-    exchangeRates = { USD: 1, JPY: 150 }
+    exchangeRates = { USD: 1, JPY: 150 },
+    sourceCurrency = 'USD' // デフォルトはUSD
 }: PriceChartProps) {
     const currencySymbol = getCurrencySymbol(currency);
     const [timeRange, setTimeRange] = useState<'1W' | '1M' | '6M' | '1Y'>('1M');
@@ -54,7 +56,7 @@ export default function PriceChart({
         datasets: [
             {
                 label: `価格 (${currency})`,
-                data: filteredData.map((d) => convertCurrency(d.price, 'USD', currency, exchangeRates)),
+                data: filteredData.map((d) => convertCurrency(d.price, sourceCurrency, currency, exchangeRates)),
                 borderColor: color,
                 backgroundColor: `${color}20`,
                 borderWidth: 2,

@@ -10,6 +10,7 @@ interface PredictionChartProps {
     title: string;
     currency?: string;
     exchangeRates?: { [key: string]: number };
+    sourceCurrency?: string;
 }
 
 export default function PredictionChart({
@@ -17,7 +18,8 @@ export default function PredictionChart({
     predictionData,
     title,
     currency = 'JPY',
-    exchangeRates = { USD: 1, JPY: 150 }
+    exchangeRates = { USD: 1, JPY: 150 },
+    sourceCurrency = 'USD'
 }: PredictionChartProps) {
     const currencySymbol = getCurrencySymbol(currency);
     const [timeRange, setTimeRange] = useState<'1W' | '1M' | '6M' | '1Y'>('1M');
@@ -65,7 +67,7 @@ export default function PredictionChart({
             {
                 label: '過去データ',
                 data: [
-                    ...recentHistorical.map((d) => convertCurrency(d.price, 'USD', currency, exchangeRates)),
+                    ...recentHistorical.map((d) => convertCurrency(d.price, sourceCurrency, currency, exchangeRates)),
                     ...new Array(predictionLength).fill(null),
                 ],
                 borderColor: '#00f0ff',
@@ -80,8 +82,8 @@ export default function PredictionChart({
                 label: 'AI予測',
                 data: [
                     ...new Array(recentHistorical.length - 1).fill(null),
-                    convertCurrency(recentHistorical[recentHistorical.length - 1].price, 'USD', currency, exchangeRates),
-                    ...filteredPrediction.map((d) => convertCurrency(d.price, 'USD', currency, exchangeRates)),
+                    convertCurrency(recentHistorical[recentHistorical.length - 1].price, sourceCurrency, currency, exchangeRates),
+                    ...filteredPrediction.map((d) => convertCurrency(d.price, sourceCurrency, currency, exchangeRates)),
                 ],
                 borderColor: '#00ff88',
                 backgroundColor: 'rgba(0, 255, 136, 0.1)',

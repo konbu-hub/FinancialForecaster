@@ -31,20 +31,56 @@ const FINNHUB_API_KEY = import.meta.env.VITE_FINNHUB_API_KEY;
 /**
  * Finnhub APIから株価データを取得
  */
+const PROXY_BASE_URL = 'http://localhost:3001/api/stock';
+
+/**
+ * 日本株: Yahoo Finance Proxy (自作サーバー) から取得
+ */
+async function fetchStockDataFromProxy(code: string): Promise<Partial<StockData> | null> {
+    try {
+        // code: "7203" (without .T)
+        console.log(`[Proxy] Fetching data for: ${code}`);
+        const response = await axios.get(`${PROXY_BASE_URL}/${code}`);
+        const data = response.data;
+
+        if (!data || !data.price) {
+            console.warn(`[Proxy] No valid data for ${code}`);
+            return null;
+        }
+
+        return {
+            price: data.price,
+            change: data.change,
+            changePercent: data.changePercent,
+            isMock: false // Proxy経由は実データ扱い
+        };
+    } catch (error) {
+        console.error('[Proxy] Error fetching data:', error);
+        return null;
+    }
+}
+
+/**
+ * Finnhub APIから株価データを取得
+ */
 async function fetchStockDataFromFinnhub(symbol: string): Promise<Partial<StockData> | null> {
+
+    // 日本株 (.T) の場合はプロキシを試す
+    if (symbol.endsWith('.T')) {
+        const code = symbol.replace('.T', '');
+        return await fetchStockDataFromProxy(code);
+    }
+
     if (!FINNHUB_API_KEY) return null;
 
     try {
-        // シンボルの調整 (Finnhubは日本株の場合 'XXXX.T' 形式でOKだが、明示的に確認)
-        // 米国株はそのままでOK
         const searchSymbol = symbol;
-
         const response = await axios.get(`https://finnhub.io/api/v1/quote?symbol=${searchSymbol}&token=${FINNHUB_API_KEY}`);
         const data = response.data;
 
         // データが取得できない、またはエラー（c=0 は取引なしまたはエラーの可能性が高い）
         if (!data || (data.c === 0 && data.d === 0)) {
-            console.warn(`Finnhub: No data found for ${symbol}`);
+            console.warn(`[Finnhub] No valid data found for ${symbol}`);
             return null;
         }
 
@@ -52,7 +88,6 @@ async function fetchStockDataFromFinnhub(symbol: string): Promise<Partial<StockD
             price: data.c,           // 現在値
             change: data.d,          // 前日比
             changePercent: data.dp,  // 前日比率
-            // marketCapなどはQuote APIでは取れないため、基本情報とマージする必要がある
         };
 
     } catch (error) {
