@@ -1,4 +1,5 @@
 import type { HistoricalPrice } from './cryptoService';
+import { cacheUtils } from '../utils/cacheUtils';
 
 export interface StockData {
     symbol: string;
@@ -15,11 +16,21 @@ export interface StockData {
     operatingIncome?: number; // 営業利益 (直近決算)
 }
 
+const CACHE_PREFIX = {
+    DATA: 'stock_data_',
+    HISTORY: 'stock_history_',
+    SEARCH: 'stock_search_',
+};
+
 /**
  * 株式の現在価格とデータを取得
  * 注: デモ用にモックデータを返す実装も含む
  */
 export async function getStockData(symbol: string): Promise<StockData> {
+    const cacheKey = CACHE_PREFIX.DATA + symbol;
+    const cached = cacheUtils.get<StockData>(cacheKey);
+    if (cached) return cached;
+
     try {
         // デモ用のモックデータ（実際のAPIキーがない場合）
         const mockData: { [key: string]: StockData } = {
@@ -464,6 +475,7 @@ export async function getStockData(symbol: string): Promise<StockData> {
 
         const upperSymbol = symbol.toUpperCase();
         if (mockData[upperSymbol]) {
+            cacheUtils.set(cacheKey, mockData[upperSymbol], 5); // 5分キャッシュ
             return mockData[upperSymbol];
         }
 
@@ -478,9 +490,13 @@ export async function getStockData(symbol: string): Promise<StockData> {
  * 株式の過去1年間の価格履歴を取得
  */
 export async function getStockHistoricalData(
-    _symbol: string, // 未使用の変数はアンダースコアを付ける
+    symbol: string,
     days: number = 365
 ): Promise<HistoricalPrice[]> {
+    const cacheKey = CACHE_PREFIX.HISTORY + symbol + '_' + days;
+    const cached = cacheUtils.get<HistoricalPrice[]>(cacheKey);
+    if (cached) return cached;
+
     try {
         // デモ用のモックデータ生成
         const mockHistoricalData: HistoricalPrice[] = [];
@@ -511,6 +527,7 @@ export async function getStockHistoricalData(
             });
         }
 
+        cacheUtils.set(cacheKey, mockHistoricalData, 10); // 10分キャッシュ
         return mockHistoricalData;
 
     } catch (error) {
@@ -523,6 +540,10 @@ export async function getStockHistoricalData(
  * 株式を検索
  */
 export async function searchStock(query: string): Promise<{ symbol: string; name: string; sector?: string; market?: string }[]> {
+    const cacheKey = CACHE_PREFIX.SEARCH + query.toLowerCase();
+    const cached = cacheUtils.get<{ symbol: string; name: string; sector?: string; market?: string }[]>(cacheKey);
+    if (cached) return cached;
+
     try {
         // 日本株検索サービスを動的インポート
         const { searchJapaneseStocks } = await import('./japaneseStockSearchService');
@@ -557,7 +578,11 @@ export async function searchStock(query: string): Promise<{ symbol: string; name
         );
 
         // 日本株と米国株を結合（日本株を優先）
-        return [...japaneseStocks, ...usResults];
+        const results = [...japaneseStocks, ...usResults];
+
+        cacheUtils.set(cacheKey, results, 30); // 30分キャッシュ
+        return results;
+
     } catch (error) {
         console.error('Error searching stocks:', error);
         throw error;

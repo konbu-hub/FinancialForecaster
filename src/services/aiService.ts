@@ -1,6 +1,7 @@
 import axios from 'axios';
 import type { HistoricalPrice } from './cryptoService';
 import type { NewsArticle } from './newsService';
+import { calculateSMA, calculateRSI, calculateVolatility } from '../utils/technicalIndicators';
 
 const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
@@ -23,12 +24,20 @@ export async function generatePricePrediction(
     newsArticles: NewsArticle[]
 ): Promise<PredictionResult> {
     try {
+        const prices = historicalData.map(d => d.price);
+        const rsi = calculateRSI(prices);
+        const sma7 = calculateSMA(prices, 7);
+        const sma30 = calculateSMA(prices, 30);
+        const volatility = calculateVolatility(prices);
+
+        const technicalIndicators = { rsi, sma7, sma30, volatility };
+
         if (!GEMINI_API_KEY) {
             console.warn('Gemini API key not found, returning mock prediction');
             return generateMockPrediction(assetName, historicalData);
         }
 
-        const prompt = buildPredictionPrompt(assetName, assetType, historicalData, newsArticles);
+        const prompt = buildPredictionPrompt(assetName, assetType, historicalData, newsArticles, technicalIndicators);
 
         const response = await axios.post(
             `${GEMINI_API_BASE}/models/gemini-pro:generateContent?key=${GEMINI_API_KEY}`,
@@ -70,7 +79,8 @@ function buildPredictionPrompt(
     assetName: string,
     assetType: string,
     historicalData: HistoricalPrice[],
-    newsArticles: NewsArticle[]
+    newsArticles: NewsArticle[],
+    indicators: { rsi: number | null, sma7: number | null, sma30: number | null, volatility: number | null }
 ): string {
     const recentPrices = historicalData.slice(-30);
     const currentPrice = historicalData[historicalData.length - 1].price;
@@ -81,6 +91,14 @@ function buildPredictionPrompt(
         .map((article) => `- ${article.title}: ${article.description}`)
         .join('\n');
 
+    const indicatorsText = `
+【テクニカル分析指標】
+- RSI (14日): ${indicators.rsi ? indicators.rsi.toFixed(2) : 'データ不足'} (70以上:買われすぎ / 30以下:売られすぎ)
+- SMA (7日): ${indicators.sma7 ? '$' + indicators.sma7.toFixed(2) : 'データ不足'}
+- SMA (30日): ${indicators.sma30 ? '$' + indicators.sma30.toFixed(2) : 'データ不足'}
+- Volatility (30日): ${indicators.volatility ? indicators.volatility.toFixed(2) + '%' : 'データ不足'}
+`;
+
     return `あなたは金融アナリストAIです。以下の情報を基に、${assetName}の今後1年間の価格予測を行ってください。
 
 【資産情報】
@@ -88,6 +106,8 @@ function buildPredictionPrompt(
 - 資産タイプ: ${assetType === 'crypto' ? '仮想通貨' : '株式'}
 - 現在価格: $${currentPrice.toFixed(2)}
 - 過去1年間の変動: ${priceChange.toFixed(2)}%
+
+${indicatorsText}
 
 【過去30日間の価格トレンド】
 ${recentPrices.map((p) => `$${p.price.toFixed(2)}`).join(', ')}
