@@ -31,7 +31,10 @@ const FINNHUB_API_KEY = import.meta.env.VITE_FINNHUB_API_KEY;
 /**
  * Finnhub APIから株価データを取得
  */
-const PROXY_BASE_URL = `${import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001'}/api/stock`;
+const ENV_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+// Handle VITE_API_BASE_URL='/' case to avoid double slash (//api/stock) which is treated as protocol-relative URL
+const BASE_URL = ENV_BASE_URL === '/' ? '' : (ENV_BASE_URL || 'http://localhost:3001');
+const PROXY_BASE_URL = `${BASE_URL}/api/stock`;
 
 /**
  * 日本株: Yahoo Finance Proxy (自作サーバー) から取得
