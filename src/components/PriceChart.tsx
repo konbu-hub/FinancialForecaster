@@ -156,17 +156,18 @@ export default function PriceChart({
             className="glass-card animate-slide-up"
             style={{
                 padding: 'clamp(1rem, 2vw, 1.5rem)',
-                height: 'clamp(300px, 60vw, 460px)',
-                position: 'relative'
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '1rem',
             }}
         >
+            <div style={{ height: 'clamp(300px, 60vw, 460px)' }}>
+                <Line data={chartData} options={options} />
+            </div>
             <div style={{
-                position: 'absolute',
-                top: 'clamp(0.75rem, 2vw, 1.5rem)',
-                right: 'clamp(0.75rem, 2vw, 1.5rem)',
-                zIndex: 10,
                 display: 'flex',
-                gap: '0.25rem',
+                gap: '0.5rem',
+                justifyContent: 'center',
                 flexWrap: 'wrap',
             }}>
                 {(['1W', '1M', '6M', '1Y'] as const).map((range) => (
@@ -177,22 +178,19 @@ export default function PriceChart({
                             background: timeRange === range ? `${color}40` : 'rgba(255, 255, 255, 0.05)',
                             border: `1px solid ${timeRange === range ? color : 'rgba(255, 255, 255, 0.1)'}`,
                             color: timeRange === range ? color : '#aaa',
-                            padding: 'clamp(0.25rem, 1vw, 0.375rem) clamp(0.5rem, 1.5vw, 0.75rem)',
+                            padding: '0.5rem 1rem',
                             borderRadius: '4px',
                             cursor: 'pointer',
-                            fontSize: 'clamp(0.625rem, 1.5vw, 0.75rem)',
+                            fontSize: '0.875rem',
                             fontFamily: 'Orbitron',
                             transition: 'all 0.2s',
-                            minHeight: '32px',
-                            minWidth: '40px',
+                            minHeight: '44px',
+                            minWidth: '60px',
                         }}
                     >
                         {range}
                     </button>
                 ))}
-            </div>
-            <div style={{ height: '100%' }}>
-                <Line data={chartData} options={options} />
             </div>
         </div>
     );
