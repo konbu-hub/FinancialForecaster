@@ -103,39 +103,58 @@ function App() {
   return (
     <div style={{ minHeight: '100vh', paddingBottom: '4rem' }}>
       {/* ヘッダー */}
-      <header style={{ padding: '2rem 0', textAlign: 'center', position: 'relative' }}>
-        {/* 通貨切り替えボタン */}
-        <div style={{ position: 'absolute', top: '2rem', right: '2rem', display: 'flex', gap: '0.5rem' }}>
+      <header style={{ padding: '2rem 0 1rem', textAlign: 'center', position: 'relative' }}>
+        <h1
+          className="font-heading text-gradient-cyan-purple"
+          style={{
+            fontSize: 'clamp(1.5rem, 5vw, 3.5rem)',
+            marginBottom: '0.5rem',
+            letterSpacing: '0.1em',
+            textTransform: 'none',
+            padding: '0 1rem',
+          }}
+        >
+          AI Financial Forecaster
+        </h1>
+        <p style={{
+          color: 'var(--color-gray-400)',
+          fontSize: 'clamp(0.875rem, 2.5vw, 1.125rem)',
+          padding: '0 1rem',
+          marginBottom: '1rem',
+        }}>
+          仮想通貨・株式の未来を予測する次世代AIアナリスト
+        </p>
+
+        {/* 通貨切り替えボタン - モバイル対応 */}
+        <div style={{
+          display: 'flex',
+          gap: '0.5rem',
+          justifyContent: 'center',
+          padding: '0 1rem',
+        }}>
           <button
             className={`btn ${currency === 'JPY' ? 'btn-primary' : 'btn-secondary'}`}
             onClick={() => setCurrency('JPY')}
-            style={{ minWidth: '80px', padding: '0.5rem 1rem', fontSize: '0.875rem' }}
+            style={{
+              minWidth: '80px',
+              padding: '0.5rem 1rem',
+              fontSize: 'clamp(0.75rem, 2vw, 0.875rem)',
+            }}
           >
             ¥ JPY
           </button>
           <button
             className={`btn ${currency === 'USD' ? 'btn-primary' : 'btn-secondary'}`}
             onClick={() => setCurrency('USD')}
-            style={{ minWidth: '80px', padding: '0.5rem 1rem', fontSize: '0.875rem' }}
+            style={{
+              minWidth: '80px',
+              padding: '0.5rem 1rem',
+              fontSize: 'clamp(0.75rem, 2vw, 0.875rem)',
+            }}
           >
             $ USD
           </button>
         </div>
-
-        <h1
-          className="font-heading text-gradient-cyan-purple"
-          style={{
-            fontSize: 'clamp(2rem, 5vw, 3.5rem)',
-            marginBottom: '0.5rem',
-            letterSpacing: '0.1em',
-            textTransform: 'none',
-          }}
-        >
-          AI Financial Forecaster
-        </h1>
-        <p style={{ color: 'var(--color-gray-400)', fontSize: '1.125rem' }}>
-          仮想通貨・株式の未来を予測する次世代AIアナリスト
-        </p>
       </header>
 
       {/* 検索バー */}
@@ -176,11 +195,11 @@ function App() {
           <div
             className="glass-card animate-slide-up"
             style={{
-              padding: '2rem',
+              padding: 'clamp(1rem, 3vw, 2rem)',
               marginBottom: '2rem',
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-              gap: '2rem',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
+              gap: 'clamp(1rem, 3vw, 2rem)',
             }}
           >
             <div>

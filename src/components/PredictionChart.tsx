@@ -179,8 +179,23 @@ export default function PredictionChart({
     };
 
     return (
-        <div className="glass-card animate-slide-up" style={{ padding: '1.5rem', height: '460px', position: 'relative' }}>
-            <div style={{ position: 'absolute', top: '1.5rem', right: '1.5rem', zIndex: 10, display: 'flex', gap: '0.5rem' }}>
+        <div
+            className="glass-card animate-slide-up"
+            style={{
+                padding: 'clamp(1rem, 2vw, 1.5rem)',
+                height: 'clamp(300px, 60vw, 460px)',
+                position: 'relative'
+            }}
+        >
+            <div style={{
+                position: 'absolute',
+                top: 'clamp(0.75rem, 2vw, 1.5rem)',
+                right: 'clamp(0.75rem, 2vw, 1.5rem)',
+                zIndex: 10,
+                display: 'flex',
+                gap: '0.25rem',
+                flexWrap: 'wrap',
+            }}>
                 {(['1W', '1M', '6M', '1Y'] as const).map((range) => (
                     <button
                         key={range}
@@ -189,12 +204,14 @@ export default function PredictionChart({
                             background: timeRange === range ? 'rgba(0, 240, 255, 0.2)' : 'rgba(255, 255, 255, 0.05)',
                             border: `1px solid ${timeRange === range ? '#00f0ff' : 'rgba(255, 255, 255, 0.1)'}`,
                             color: timeRange === range ? '#00f0ff' : '#aaa',
-                            padding: '0.25rem 0.5rem',
+                            padding: 'clamp(0.25rem, 1vw, 0.375rem) clamp(0.5rem, 1.5vw, 0.75rem)',
                             borderRadius: '4px',
                             cursor: 'pointer',
-                            fontSize: '0.75rem',
+                            fontSize: 'clamp(0.625rem, 1.5vw, 0.75rem)',
                             fontFamily: 'Orbitron',
-                            transition: 'all 0.2s'
+                            transition: 'all 0.2s',
+                            minHeight: '32px',
+                            minWidth: '40px',
                         }}
                     >
                         {range}

@@ -83,6 +83,16 @@
   --z-modal: 1400;
   --z-popover: 1500;
   --z-tooltip: 1600;
+
+  /* Breakpoints */
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+
+  /* Mobile-specific spacing */
+  --mobile-padding: 1rem;
+  --mobile-gap: 0.75rem;
 }
 
 /* タイポグラフィ */
@@ -226,6 +236,7 @@
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -236,6 +247,7 @@
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -247,6 +259,7 @@
     opacity: 0;
     transform: translateY(-20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -254,18 +267,24 @@
 }
 
 @keyframes pulse {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 1;
   }
+
   50% {
     opacity: 0.5;
   }
 }
 
 @keyframes glow {
-  0%, 100% {
+
+  0%,
+  100% {
     box-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
   }
+
   50% {
     box-shadow: 0 0 40px rgba(0, 240, 255, 0.8);
   }
@@ -324,4 +343,76 @@
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-accent-cyan);
   box-shadow: var(--glow-cyan);
+}
+
+/* ============================================
+   モバイル対応スタイル
+   ============================================ */
+
+/* タッチターゲット最適化 */
+@media (max-width: 768px) {
+  .btn {
+    min-height: 44px;
+    min-width: 44px;
+    padding: var(--spacing-md) var(--spacing-lg);
+    font-size: 0.875rem;
+  }
+
+  .input {
+    min-height: 44px;
+    font-size: 16px;
+    /* iOS zoom防止 */
+  }
+
+  /* グラスカードのホバー効果をタップ用に調整 */
+  .glass-card:hover {
+    transform: none;
+  }
+
+  .glass-card:active {
+    background: var(--glass-bg-hover);
+    transform: scale(0.98);
+  }
+
+  /* モバイル用スペーシング */
+  .container {
+    padding: 0 var(--mobile-padding);
+  }
+
+  /* フォントサイズ調整 */
+  .font-heading {
+    letter-spacing: 0.03em;
+  }
+}
+
+/* 小画面スマートフォン */
+@media (max-width: 640px) {
+  :root {
+    --spacing-lg: 1rem;
+    --spacing-xl: 1.5rem;
+    --spacing-2xl: 2rem;
+  }
+
+  .btn {
+    font-size: 0.8125rem;
+  }
+}
+
+/* タブレット */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .container {
+    padding: 0 var(--spacing-xl);
+  }
+}
+
+/* モーション設定の尊重 */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

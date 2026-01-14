@@ -120,18 +120,18 @@ export default function SearchBar({ onSearch }: SearchBarProps) {
     return (
         <div className="search-container" style={{ position: 'relative', width: '100%', maxWidth: '800px', margin: '0 auto' }}>
             {/* タイプ選択 */}
-            <div style={{ display: 'flex', gap: '1rem', marginBottom: '1rem', justifyContent: 'center' }}>
+            <div style={{ display: 'flex', gap: 'clamp(0.5rem, 2vw, 1rem)', marginBottom: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
                 <button
                     className={`btn ${assetType === 'crypto' ? 'btn-primary' : 'btn-secondary'}`}
                     onClick={() => handleTypeChange('crypto')}
-                    style={{ minWidth: '150px' }}
+                    style={{ minWidth: 'clamp(120px, 30vw, 150px)', flex: '1 1 auto', maxWidth: '200px' }}
                 >
                     🪙 仮想通貨
                 </button>
                 <button
                     className={`btn ${assetType === 'stock' ? 'btn-primary' : 'btn-secondary'}`}
                     onClick={() => handleTypeChange('stock')}
-                    style={{ minWidth: '150px' }}
+                    style={{ minWidth: 'clamp(120px, 30vw, 150px)', flex: '1 1 auto', maxWidth: '200px' }}
                 >
                     🏢 株式
                 </button>
@@ -158,7 +158,7 @@ export default function SearchBar({ onSearch }: SearchBarProps) {
                         className="btn btn-primary"
                         onClick={() => handleSearch()}
                         disabled={!query.trim()}
-                        style={{ minWidth: '120px' }}
+                        style={{ minWidth: 'clamp(80px, 20vw, 120px)' }}
                     >
                         {isLoading ? '検索中...' : '🔍 検索'}
                     </button>
