@@ -616,6 +616,64 @@ export async function getStockData(symbol: string): Promise<StockData> {
 }
 
 /**
+ * プロキシ経由で株価履歴を取得
+ */
+async function fetchStockHistoryFromProxy(symbol: string, days: number): Promise<HistoricalPrice[] | null> {
+    try {
+        const code = symbol.replace('.T', '');
+
+        // 日数をYahoo Financeのrange形式に変換
+        let range = '1y';
+        let interval = '1d';
+
+        if (days <= 7) {
+            range = '5d';
+            interval = '15m'; // 短期間なら細かい足で
+        } else if (days <= 30) {
+            range = '1mo';
+            interval = '1d';
+        } else if (days <= 90) {
+            range = '3mo';
+        } else if (days <= 180) {
+            range = '6mo';
+        } else if (days <= 365) {
+            range = '1y';
+        } else if (days <= 730) {
+            range = '2y';
+        } else {
+            range = '5y';
+            interval = '1wk'; // 長期間なら週足
+        }
+
+        console.log(`[Proxy] Fetching history for: ${symbol}, Range: ${range}`);
+
+        // Yahoo Finance Proxyを使用
+        const response = await axios.get(`${PROXY_BASE_URL}/${code}/history`, {
+            params: { range, interval }
+        });
+
+        const data = response.data;
+        if (!Array.isArray(data) || data.length === 0) {
+            return null;
+        }
+
+        return data.map((item: any) => ({
+            timestamp: item.timestamp,
+            price: item.close,
+            open: item.open,
+            high: item.high,
+            low: item.low,
+            close: item.close,
+            volume: item.volume
+        }));
+
+    } catch (error) {
+        console.error('[Proxy] Error fetching history:', error);
+        return null;
+    }
+}
+
+/**
  * 株式の過去1年間の価格履歴を取得
  */
 export async function getStockHistoricalData(
@@ -627,13 +685,25 @@ export async function getStockHistoricalData(
     if (cached) return cached;
 
     try {
-        // デモ用のモックデータ生成
+        // プロキシから実データを取得を試みる
+        const realData = await fetchStockHistoryFromProxy(symbol, days);
+
+        if (realData && realData.length > 0) {
+            console.log(`Using real historical data for ${symbol}`);
+            cacheUtils.set(cacheKey, realData, 30); // 30分キャッシュ
+            return realData;
+        }
+
+        console.warn(`Falling back to mock history for ${symbol}`);
+
+        // デモ用のモックデータ生成 (フォールバック)
         const mockHistoricalData: HistoricalPrice[] = [];
         const endDate = new Date();
         const startDate = new Date();
         startDate.setDate(startDate.getDate() - days);
 
         let basePrice = 150;
+        // ... (以下既存のモック生成ロジックはそのまま)
         const volatility = 0.02;
 
         for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
