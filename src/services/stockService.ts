@@ -1,3 +1,4 @@
+import axios from 'axios';
 import type { HistoricalPrice } from './cryptoService';
 import { cacheUtils } from '../utils/cacheUtils';
 
@@ -15,6 +16,7 @@ export interface StockData {
     revenue?: number;       // 売上高 (直近決算)
     operatingIncome?: number; // 営業利益 (直近決算)
     market?: string;        // 上場市場 (例: NASDAQ, 東証プライム)
+    isMock?: boolean;       // モックデータかどうか
 }
 
 const CACHE_PREFIX = {
@@ -23,9 +25,45 @@ const CACHE_PREFIX = {
     SEARCH: 'stock_search_',
 };
 
+// Finnhub API Key
+const FINNHUB_API_KEY = import.meta.env.VITE_FINNHUB_API_KEY;
+
+/**
+ * Finnhub APIから株価データを取得
+ */
+async function fetchStockDataFromFinnhub(symbol: string): Promise<Partial<StockData> | null> {
+    if (!FINNHUB_API_KEY) return null;
+
+    try {
+        // シンボルの調整 (Finnhubは日本株の場合 'XXXX.T' 形式でOKだが、明示的に確認)
+        // 米国株はそのままでOK
+        const searchSymbol = symbol;
+
+        const response = await axios.get(`https://finnhub.io/api/v1/quote?symbol=${searchSymbol}&token=${FINNHUB_API_KEY}`);
+        const data = response.data;
+
+        // データが取得できない、またはエラー（c=0 は取引なしまたはエラーの可能性が高い）
+        if (!data || (data.c === 0 && data.d === 0)) {
+            console.warn(`Finnhub: No data found for ${symbol}`);
+            return null;
+        }
+
+        return {
+            price: data.c,           // 現在値
+            change: data.d,          // 前日比
+            changePercent: data.dp,  // 前日比率
+            // marketCapなどはQuote APIでは取れないため、基本情報とマージする必要がある
+        };
+
+    } catch (error) {
+        console.error('Error fetching data from Finnhub:', error);
+        return null;
+    }
+}
+
 /**
  * 株式の現在価格とデータを取得
- * 注: デモ用にモックデータを返す実装も含む
+ * 注: APIキーがある場合はFinnhubから取得し、ない場合はモックデータを返す
  */
 export async function getStockData(symbol: string): Promise<StockData> {
     const cacheKey = CACHE_PREFIX.DATA + symbol;
@@ -33,7 +71,7 @@ export async function getStockData(symbol: string): Promise<StockData> {
     if (cached) return cached;
 
     try {
-        // デモ用のモックデータ（実際のAPIキーがない場合）
+        // デモ用のモックデータ（基本情報として使用）
         const mockData: { [key: string]: StockData } = {
             // 米国株
             AAPL: {
@@ -100,10 +138,10 @@ export async function getStockData(symbol: string): Promise<StockData> {
             '7203.T': {
                 symbol: '7203.T',
                 name: 'トヨタ自動車株式会社',
-                price: 2845,
-                change: 35,
+                price: 3600,
+                change: 45,
                 changePercent: 1.25,
-                marketCap: 42000000000000,
+                marketCap: 48000000000000,
                 sector: '自動車',
                 employees: 375235,
                 description: '世界最大級の自動車メーカー。ハイブリッド技術のリーダー',
@@ -115,9 +153,9 @@ export async function getStockData(symbol: string): Promise<StockData> {
             '6758.T': {
                 symbol: '6758.T',
                 name: 'ソニーグループ株式会社',
-                price: 13250,
-                change: -120,
-                changePercent: -0.90,
+                price: 3100, // 株式分割考慮
+                change: -25,
+                changePercent: -0.80,
                 marketCap: 16500000000000,
                 sector: 'エレクトロニクス',
                 employees: 109700,
@@ -130,10 +168,10 @@ export async function getStockData(symbol: string): Promise<StockData> {
             '7974.T': {
                 symbol: '7974.T',
                 name: '任天堂株式会社',
-                price: 7890,
-                change: 85,
-                changePercent: 1.09,
-                marketCap: 10300000000000,
+                price: 8300,
+                change: 120,
+                changePercent: 1.45,
+                marketCap: 10800000000000,
                 sector: 'ゲーム',
                 employees: 6717,
                 description: '世界的なゲーム機・ソフトウェアメーカー。Switch、マリオなど',
@@ -145,10 +183,10 @@ export async function getStockData(symbol: string): Promise<StockData> {
             '9984.T': {
                 symbol: '9984.T',
                 name: 'ソフトバンクグループ株式会社',
-                price: 6420,
-                change: -85,
-                changePercent: -1.31,
-                marketCap: 9800000000000,
+                price: 9200,
+                change: 150,
+                changePercent: 1.63,
+                marketCap: 13500000000000,
                 sector: '通信・投資',
                 employees: 67000,
                 description: 'テクノロジー投資会社。通信事業とベンチャー投資を展開',
@@ -160,10 +198,10 @@ export async function getStockData(symbol: string): Promise<StockData> {
             '6861.T': {
                 symbol: '6861.T',
                 name: '株式会社キーエンス',
-                price: 68500,
-                change: 1200,
-                changePercent: 1.78,
-                marketCap: 16200000000000,
+                price: 72000,
+                change: 1500,
+                changePercent: 2.13,
+                marketCap: 17500000000000,
                 sector: '電子機器',
                 employees: 9335,
                 description: '産業用センサー・測定器のトップメーカー。高収益企業',
@@ -175,10 +213,10 @@ export async function getStockData(symbol: string): Promise<StockData> {
             '7267.T': {
                 symbol: '7267.T',
                 name: '本田技研工業株式会社',
-                price: 1580,
-                change: 22,
-                changePercent: 1.41,
-                marketCap: 8500000000000,
+                price: 1850,
+                change: 32,
+                changePercent: 1.76,
+                marketCap: 9200000000000,
                 sector: '輸送用機器',
                 employees: 204035,
                 description: '世界的な自動車・二輪車メーカー。F1でも活躍',
@@ -190,10 +228,10 @@ export async function getStockData(symbol: string): Promise<StockData> {
             '7201.T': {
                 symbol: '7201.T',
                 name: '日産自動車株式会社',
-                price: 485,
-                change: -8,
-                changePercent: -1.62,
-                marketCap: 1900000000000,
+                price: 580,
+                change: 5,
+                changePercent: 0.87,
+                marketCap: 2200000000000,
                 sector: '輸送用機器',
                 employees: 131461,
                 description: '日本の大手自動車メーカー。電気自動車リーフを展開',
@@ -205,10 +243,10 @@ export async function getStockData(symbol: string): Promise<StockData> {
             '9433.T': {
                 symbol: '9433.T',
                 name: 'KDDI株式会社',
-                price: 4235,
-                change: 45,
-                changePercent: 1.07,
-                marketCap: 9200000000000,
+                price: 4950,
+                change: 60,
+                changePercent: 1.23,
+                marketCap: 10500000000000,
                 sector: '情報・通信業',
                 employees: 49930,
                 description: '日本の大手通信事業者。auブランドで展開',
@@ -220,10 +258,10 @@ export async function getStockData(symbol: string): Promise<StockData> {
             '9432.T': {
                 symbol: '9432.T',
                 name: '日本電信電話株式会社',
-                price: 165,
-                change: 2,
-                changePercent: 1.23,
-                marketCap: 16000000000000,
+                price: 185,
+                change: 1,
+                changePercent: 0.54,
+                marketCap: 17200000000000,
                 sector: '情報・通信業',
                 employees: 330000,
                 description: '日本最大の通信事業者。NTTドコモなどを傘下に持つ',
@@ -235,10 +273,10 @@ export async function getStockData(symbol: string): Promise<StockData> {
             '8306.T': {
                 symbol: '8306.T',
                 name: '三菱UFJフィナンシャル・グループ',
-                price: 1285,
-                change: 18,
-                changePercent: 1.42,
-                marketCap: 16500000000000,
+                price: 1650,
+                change: 25,
+                changePercent: 1.54,
+                marketCap: 19500000000000,
                 sector: '銀行業',
                 employees: 160000,
                 description: '日本最大の金融グループ。三菱UFJ銀行を中核とする',
@@ -250,10 +288,10 @@ export async function getStockData(symbol: string): Promise<StockData> {
             '4502.T': {
                 symbol: '4502.T',
                 name: '武田薬品工業株式会社',
-                price: 4125,
-                change: -35,
-                changePercent: -0.84,
-                marketCap: 6500000000000,
+                price: 4350,
+                change: 45,
+                changePercent: 1.05,
+                marketCap: 6800000000000,
                 sector: '医薬品',
                 employees: 47099,
                 description: '日本最大の製薬会社。グローバルに事業展開',
@@ -265,10 +303,10 @@ export async function getStockData(symbol: string): Promise<StockData> {
             '6501.T': {
                 symbol: '6501.T',
                 name: '日立製作所株式会社',
-                price: 3845,
-                change: 62,
-                changePercent: 1.64,
-                marketCap: 11000000000000,
+                price: 4100, // 分割考慮などで調整
+                change: 80,
+                changePercent: 1.99,
+                marketCap: 12500000000000,
                 sector: '電気機器',
                 employees: 368247,
                 description: '総合電機メーカー。社会インフラ、ITシステムに強み',
@@ -280,10 +318,10 @@ export async function getStockData(symbol: string): Promise<StockData> {
             '9983.T': {
                 symbol: '9983.T',
                 name: 'ファーストリテイリング株式会社',
-                price: 38500,
-                change: 450,
-                changePercent: 1.18,
-                marketCap: 11500000000000,
+                price: 42500,
+                change: 650,
+                changePercent: 1.55,
+                marketCap: 13000000000000,
                 sector: '小売業',
                 employees: 56143,
                 description: 'ユニクロを展開する世界的アパレル企業',
@@ -296,10 +334,10 @@ export async function getStockData(symbol: string): Promise<StockData> {
             '2181.T': {
                 symbol: '2181.T',
                 name: 'パーソルホールディングス',
-                price: 3250,
-                change: 45,
-                changePercent: 1.40,
-                marketCap: 520000000000,
+                price: 293, // 株価修正
+                change: 4,
+                changePercent: 1.38,
+                marketCap: 670000000000,
                 sector: 'サービス業',
                 employees: 58000,
                 description: '人材派遣・人材紹介サービスの大手。テンプスタッフ、パーソルキャリアなどを展開',
@@ -490,20 +528,57 @@ export async function getStockData(symbol: string): Promise<StockData> {
             },
         };
 
+        // 基本情報をモックデータから取得
+        // 存在しない銘柄でもAPIで価格だけ取れるかもしれないが、今回は詳細表示のためにモックにあるもの + API価格を基本とする
         const upperSymbol = symbol.toUpperCase();
-        if (mockData[upperSymbol]) {
-            cacheUtils.set(cacheKey, mockData[upperSymbol], 5); // 5分キャッシュ
-            return mockData[upperSymbol];
+        let baseData = mockData[upperSymbol];
+
+        // モックにない場合でも、最低限の情報を構築してAPIを見に行く
+        if (!baseData) {
+            // すでに検索でヒットしているはずなので、最低限のオブジェクトを作る
+            baseData = {
+                symbol: upperSymbol,
+                name: upperSymbol, // 名前は後で解決できればベストだが
+                price: 0,
+                change: 0,
+                changePercent: 0,
+                market: symbol.endsWith('.T') ? '東証' : 'US',
+            };
         }
 
-        throw new Error('株式が見つかりませんでした');
+        // API連携: Finnhubから最新価格を取得
+        const apiData = await fetchStockDataFromFinnhub(upperSymbol);
+
+        // 最終的なデータ
+        let finalData = { ...baseData };
+
+        if (apiData) {
+            // APIから取得できた場合は価格情報を上書き
+            finalData = {
+                ...finalData,
+                ...apiData,
+                isMock: false, // 明示的にモックではないとする
+            };
+            console.log(`Updated ${symbol} with real-time data from Finnhub`);
+        } else if (mockData[upperSymbol]) {
+            // モックデータを使用する場合（API失敗 または キーなし）
+            finalData = {
+                ...finalData,
+                isMock: true
+            };
+        } else {
+            // モックにもなく、APIでも取れなかった場合
+            throw new Error('株式が見つかりませんでした');
+        }
+
+        cacheUtils.set(cacheKey, finalData, 5); // 5分キャッシュ
+        return finalData;
+
     } catch (error) {
         console.error('Error fetching stock data:', error);
         throw error;
     }
 }
-
-
 
 /**
  * 株式の過去1年間の価格履歴を取得
@@ -578,14 +653,14 @@ export async function searchStock(query: string): Promise<{ symbol: string; name
 
         // 米国株のモックデータ
         const usStocks = [
-            { symbol: 'AAPL', name: 'Apple Inc.' },
-            { symbol: 'GOOGL', name: 'Alphabet Inc.' },
-            { symbol: 'MSFT', name: 'Microsoft Corporation' },
-            { symbol: 'TSLA', name: 'Tesla, Inc.' },
-            { symbol: 'AMZN', name: 'Amazon.com, Inc.' },
-            { symbol: 'META', name: 'Meta Platforms, Inc.' },
-            { symbol: 'NVDA', name: 'NVIDIA Corporation' },
-            { symbol: 'JPM', name: 'JPMorgan Chase & Co.' },
+            { symbol: 'AAPL', name: 'Apple Inc.', market: 'NASDAQ' },
+            { symbol: 'GOOGL', name: 'Alphabet Inc.', market: 'NASDAQ' },
+            { symbol: 'MSFT', name: 'Microsoft Corporation', market: 'NASDAQ' },
+            { symbol: 'TSLA', name: 'Tesla, Inc.', market: 'NASDAQ' },
+            { symbol: 'AMZN', name: 'Amazon.com, Inc.', market: 'NASDAQ' },
+            { symbol: 'META', name: 'Meta Platforms, Inc.', market: 'NASDAQ' },
+            { symbol: 'NVDA', name: 'NVIDIA Corporation', market: 'NASDAQ' },
+            { symbol: 'JPM', name: 'JPMorgan Chase & Co.', market: 'NYSE' },
         ];
 
         // 米国株を検索

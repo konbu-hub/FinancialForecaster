@@ -7,6 +7,29 @@ interface CompanyInfoProps {
 export default function CompanyInfo({ stockData }: CompanyInfoProps) {
     return (
         <div className="glass-card animate-slide-up" style={{ padding: '2rem', marginBottom: '2rem' }}>
+            {stockData.isMock && (
+                <div style={{
+                    background: 'rgba(255, 150, 0, 0.1)',
+                    border: '1px solid rgba(255, 150, 0, 0.3)',
+                    borderRadius: '8px',
+                    padding: '0.75rem 1rem',
+                    marginBottom: '1.5rem',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.75rem',
+                    color: '#ffb347' // 明るいオレンジ
+                }}>
+                    <span style={{ fontSize: '1.25rem' }}>⚠️</span>
+                    <p style={{ margin: 0, fontSize: '0.875rem' }}>
+                        リアルタイムデータの取得に失敗したため、デモデータを表示しています。
+                        <br />
+                        <span style={{ fontSize: '0.75rem', opacity: 0.8 }}>
+                            (API制限またはキー設定エラーの可能性があります)
+                        </span>
+                    </p>
+                </div>
+            )}
+
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
                 <h3 className="glow-text-cyan" style={{ fontSize: '1.5rem', fontWeight: 700, margin: 0 }}>
                     🏢 企業情報
