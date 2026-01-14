@@ -132,7 +132,15 @@ app.get('/api/stock/:code', async (req, res) => {
 
     } catch (error) {
         console.error('J-Quants Proxy Error:', error.message);
-        res.status(500).json({ error: 'Failed to fetch stock data' });
+        // dataもログに出す
+        if (error.response) {
+            console.error('J-Quants Response Data:', error.response.data);
+        }
+        res.status(500).json({
+            error: 'Failed to fetch stock data',
+            debug_message: error.message,
+            debug_details: error.response?.data || 'No response data'
+        });
     }
 });
 
