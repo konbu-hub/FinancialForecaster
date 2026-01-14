@@ -62,7 +62,7 @@ export async function generatePricePrediction(
 
         if (response.data?.candidates?.[0]?.content?.parts?.[0]?.text) {
             const aiResponse = response.data.candidates[0].content.parts[0].text;
-            return parsePredictionResponse(aiResponse, historicalData);
+            return parsePredictionResponse(aiResponse, historicalData, assetName);
         }
 
         throw new Error('AI応答の解析に失敗しました');
@@ -144,7 +144,8 @@ ${newsContext}
  */
 function parsePredictionResponse(
     aiResponse: string,
-    historicalData: HistoricalPrice[]
+    historicalData: HistoricalPrice[],
+    assetName: string
 ): PredictionResult {
     try {
         // JSONブロックを抽出
@@ -205,7 +206,7 @@ function parsePredictionResponse(
         };
     } catch (error) {
         console.error('Error parsing AI response:', error);
-        return generateMockPrediction('Asset', historicalData);
+        return generateMockPrediction(assetName, historicalData);
     }
 }
 
@@ -218,6 +219,18 @@ function generateMockPrediction(
 ): PredictionResult {
     const currentPrice = historicalData[historicalData.length - 1].price;
     const lastTimestamp = historicalData[historicalData.length - 1].timestamp;
+
+    // テクニカル指標を計算
+    const prices = historicalData.map(d => d.price);
+    const rsi = calculateRSI(prices) || 50;
+    const sma7 = calculateSMA(prices, 7) || currentPrice;
+    const sma30 = calculateSMA(prices, 30) || currentPrice;
+    const volatility = calculateVolatility(prices) || 0;
+
+    // RSIに基づくセンチメント調整
+    let sentiment = 'neutral';
+    if (rsi > 70) sentiment = 'overbought';
+    else if (rsi < 30) sentiment = 'oversold';
 
     // シンプルなトレンド予測（過去30日の平均成長率を使用）
     const recentData = historicalData.slice(-30);
@@ -249,6 +262,13 @@ function generateMockPrediction(
         });
     }
 
+    // テクニカル分析コメントの生成
+    const technicalComment = `現在のRSIは${rsi.toFixed(2)}で、${sentiment === 'overbought' ? '買われすぎの水準にあり、短期的な調整が警戒されます。' :
+        sentiment === 'oversold' ? '売られすぎの水準にあり、反発の期待が高まっています。' :
+            '中立的な水準で推移しており、トレンドの方向性を見極める局面です。'
+        } ボラティリティは${volatility.toFixed(2)}%となっており、${volatility > 3 ? '市場の価格変動が激しくなっています。' : '比較的落ち着いた値動きを示しています。'
+        }`;
+
     return {
         predictions,
         analysis: `${assetName}の今後1年間の価格予測分析:
@@ -256,16 +276,21 @@ function generateMockPrediction(
 過去1年間のデータとテクニカル分析に基づき、${assetName}は今後12ヶ月間で段階的な成長が見込まれます。
 
 【主要な分析ポイント】
-1. **トレンド分析**: 過去30日間のデータから、平均的な成長率は${(avgGrowthRate * 100).toFixed(2)}%/日と算出されます。この傾向が継続すると仮定した場合、年間で約${((Math.pow(1 + avgGrowthRate, 365) - 1) * 100).toFixed(2)}%の成長が期待されます。
+1. **テクニカル指標**: ${technicalComment}
+SMA(7日線)は$${sma7.toFixed(2)}、SMA(30日線)は$${sma30.toFixed(2)}で推移しています。
 
-2. **市場環境**: 現在の市場環境は比較的安定しており、機関投資家の参入も継続しています。これは中長期的な価格上昇を支える要因となります。
+2. **トレンド分析**: 過去30日間のデータから、平均的な成長率は${(avgGrowthRate * 100).toFixed(2)}%/日と算出されます。この傾向が継続すると仮定した場合、年間で約${((Math.pow(1 + avgGrowthRate, 365) - 1) * 100).toFixed(2)}%の成長が期待されます。
 
-3. **ボラティリティ**: 短期的には±10-15%程度の価格変動が予想されますが、長期的なトレンドは上昇基調を維持すると予測されます。
+3. **市場環境**: 現在の市場環境は比較的安定しており、機関投資家の参入も継続しています。これは中長期的な価格上昇を支える要因となります。
 
 【注意事項】
 この予測は過去のデータとテクニカル分析に基づくものであり、投資アドバイスではありません。実際の市場は予測不可能な要因により大きく変動する可能性があります。投資判断は自己責任で行ってください。`,
         confidence: 'medium',
         keyFactors: [
+            {
+                title: 'テクニカル指標の示唆',
+                reasoning: `RSIが${rsi.toFixed(2)}を示しており、${sentiment === 'overbought' ? '過熱感があるため利益確定売りが出る可能性があります。' : sentiment === 'oversold' ? '割安感から押し目買いが入る可能性があります。' : '安定した需給バランスを保っています。'} また、移動平均線の形状からは${currentPrice > sma30 ? '上昇トレンドの継続' : '調整局面入り'}が示唆されています。`
+            },
             {
                 title: '過去30日間の安定した成長トレンド',
                 reasoning: '移動平均線が右肩上がりを示しており、短期・中期ともに上昇基調が継続しています。過去のボラティリティと比較しても安定した推移を見せており、大口投資家の継続的な買い支えが示唆されています。'
@@ -278,12 +303,12 @@ function generateMockPrediction(
                 title: '機関投資家の継続的な参入',
                 reasoning: 'オンチェーン分析によると、大口アドレスの保有量が増加傾向にあります。ETFや投資信託を通じた機関投資家の資金流入は、短期的な価格変動を抑制し、長期的な上昇トレンドを形成する基盤となります。'
             },
-            {
-                title: 'テクニカル指標の強気シグナル',
-                reasoning: 'RSI（相対力指数）が依然として買われすぎ水準には達しておらず、MACDもゴールデンクロスを維持しています。これらはテクニカル分析において、上昇トレンドがまだ継続する可能性が高いことを示唆しています。'
-            },
         ],
         risks: [
+            {
+                title: 'ボラティリティの拡大リスク',
+                reasoning: `現在のボラティリティは${volatility.toFixed(2)}%です。${volatility > 5 ? '価格変動が非常に激しくなっており、急激な下落に注意が必要です。' : '現在は安定していますが、外部要因により急変動する可能性があります。'}`
+            },
             {
                 title: '規制環境の変化による影響',
                 reasoning: '主要国における暗号資産や金融商品に対する規制強化の動きは、市場センチメントを冷やす最大のリスク要因です。特に未登録証券問題や税制改正に関するニュースには注意が必要です。'
@@ -295,10 +320,6 @@ function generateMockPrediction(
             {
                 title: '市場全体の調整局面の可能性',
                 reasoning: '短期間での急激な価格上昇の反動として、利益確定売りによる一時的な調整局面が訪れる可能性があります。過去のパターンからも、一定の上昇後には10-20%程度の下落調整が一般的です。'
-            },
-            {
-                title: '競合資産への資金流出リスク',
-                reasoning: 'より高い利回りや技術的優位性を持つ新しいプロジェクトや競合資産への関心が高まり、資金が流出するリスクがあります。市場シェアの推移を注視する必要があります。'
             },
         ],
     };
