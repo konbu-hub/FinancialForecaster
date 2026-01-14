@@ -1,4 +1,4 @@
-import axios from 'axios';
+import type { HistoricalPrice } from './cryptoService';
 
 export interface StockData {
     symbol: string;
@@ -13,19 +13,6 @@ export interface StockData {
     country?: string;       // 国（'US' | 'JP'）
 }
 
-export interface HistoricalPrice {
-    timestamp: number;
-    price: number;
-    open?: number;
-    high?: number;
-    low?: number;
-    close?: number;
-    volume?: number;
-}
-
-// Yahoo Finance APIの代替として、無料のFinancial Modeling Prep APIを使用
-// 注: 実際の本番環境では適切なAPIキーと有料プランの検討が必要
-const FMP_API_BASE = 'https://financialmodelingprep.com/api/v3';
 
 /**
  * 株式の現在価格とデータを取得
@@ -417,11 +404,6 @@ export async function getStockData(symbol: string): Promise<StockData> {
             return mockData[upperSymbol];
         }
 
-        // 実際のAPI呼び出し（APIキーが必要）
-        // const response = await axios.get(`${FMP_API_BASE}/quote/${symbol}`, {
-        //   params: { apikey: 'YOUR_API_KEY' }
-        // });
-
         throw new Error('株式が見つかりませんでした');
     } catch (error) {
         console.error('Error fetching stock data:', error);
@@ -433,7 +415,7 @@ export async function getStockData(symbol: string): Promise<StockData> {
  * 株式の過去1年間の価格履歴を取得
  */
 export async function getStockHistoricalData(
-    symbol: string,
+    _symbol: string, // 未使用の変数はアンダースコアを付ける
     days: number = 365
 ): Promise<HistoricalPrice[]> {
     try {
@@ -468,10 +450,6 @@ export async function getStockHistoricalData(
 
         return mockHistoricalData;
 
-        // 実際のAPI呼び出し（APIキーが必要）
-        // const response = await axios.get(`${FMP_API_BASE}/historical-price-full/${symbol}`, {
-        //   params: { apikey: 'YOUR_API_KEY' }
-        // });
     } catch (error) {
         console.error('Error fetching stock historical data:', error);
         throw error;

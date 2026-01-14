@@ -13,6 +13,11 @@ export interface CryptoData {
 export interface HistoricalPrice {
   timestamp: number;
   price: number;
+  open?: number;
+  high?: number;
+  low?: number;
+  close?: number;
+  volume?: number;
 }
 
 const COINGECKO_API_BASE = 'https://api.coingecko.com/api/v3';
