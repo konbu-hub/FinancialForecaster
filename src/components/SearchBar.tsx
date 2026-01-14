@@ -86,6 +86,9 @@ export default function SearchBar({ onSearch }: SearchBarProps) {
                 e.preventDefault();
                 if (selectedIndex >= 0 && selectedIndex < suggestions.length) {
                     handleSuggestionClick(suggestions[selectedIndex]);
+                } else if (suggestions.length > 0) {
+                    // 何も選択されていない場合は、先頭の候補を自動選択
+                    handleSuggestionClick(suggestions[0]);
                 } else {
                     handleSearch();
                 }
