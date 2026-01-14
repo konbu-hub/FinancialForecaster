@@ -3,6 +3,7 @@ require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') }
 const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
+const yahooFinance = require('yahoo-finance2').default; // Foreign stock support
 
 const app = express();
 const PORT = 3001;
@@ -138,52 +139,99 @@ app.get('/api/stock/:code', async (req, res) => {
 app.get('/api/stock/:code/history', async (req, res) => {
     try {
         const { code } = req.params;
-        const { range = '1y' } = req.query;
+        const { range = '1y', interval = '1d' } = req.query;
 
-        const symbol = code.endsWith('.T') ? code : `${code}.T`;
-        console.log(`[J-Quants] Fetching history for: ${symbol}, Range: ${range}`);
+        // 日本株判定 (数字4-5桁 または .T で終わる)
+        const isJp = /^\d{4,5}$/.test(code) || code.endsWith('.T');
 
-        // J-Quants無料プラン対応: 現在から約90日前を最新(toDate)とする
-        const now = new Date();
-        now.setDate(now.getDate() - 90);
-        const toDate = formatDate(now);
+        if (isJp) {
+            // === J-Quants (日本株) Logic ===
+            const symbol = code.endsWith('.T') ? code : `${code}.T`;
+            console.log(`[J-Quants] Fetching history for: ${symbol}, Range: ${range}`);
 
-        // fromDateは、その toDate から range 分遡る
-        const fromDateObj = new Date(now); // toDateの時点
-        switch (range) {
-            case '1d': fromDateObj.setDate(fromDateObj.getDate() - 5); break;
-            case '5d': fromDateObj.setDate(fromDateObj.getDate() - 10); break;
-            case '1mo': fromDateObj.setMonth(fromDateObj.getMonth() - 1); break;
-            case '3mo': fromDateObj.setMonth(fromDateObj.getMonth() - 3); break;
-            case '6mo': fromDateObj.setMonth(fromDateObj.getMonth() - 6); break;
-            case '1y': fromDateObj.setFullYear(fromDateObj.getFullYear() - 1); break;
-            case '2y': fromDateObj.setFullYear(fromDateObj.getFullYear() - 2); break;
-            case '5y': fromDateObj.setFullYear(fromDateObj.getFullYear() - 5); break;
-            default: fromDateObj.setFullYear(fromDateObj.getFullYear() - 1);
+            // J-Quants無料プラン対応: 現在から約90日前を最新(toDate)とする
+            const now = new Date();
+            now.setDate(now.getDate() - 90);
+            const toDate = formatDate(now);
+
+            // fromDateは、その toDate から range 分遡る
+            const fromDateObj = new Date(now); // toDateの時点
+            switch (range) {
+                case '1d': fromDateObj.setDate(fromDateObj.getDate() - 5); break;
+                case '5d': fromDateObj.setDate(fromDateObj.getDate() - 10); break;
+                case '1mo': fromDateObj.setMonth(fromDateObj.getMonth() - 1); break;
+                case '3mo': fromDateObj.setMonth(fromDateObj.getMonth() - 3); break;
+                case '6mo': fromDateObj.setMonth(fromDateObj.getMonth() - 6); break;
+                case '1y': fromDateObj.setFullYear(fromDateObj.getFullYear() - 1); break;
+                case '2y': fromDateObj.setFullYear(fromDateObj.getFullYear() - 2); break;
+                case '5y': fromDateObj.setFullYear(fromDateObj.getFullYear() - 5); break;
+                default: fromDateObj.setFullYear(fromDateObj.getFullYear() - 1);
+            }
+            const fromDate = formatDate(fromDateObj);
+
+            const quotes = await fetchJQuantsData(code, fromDate, toDate);
+
+            if (!quotes || quotes.length === 0) {
+                return res.status(404).json({ error: 'History not found' });
+            }
+
+            // フロントエンドの形式に変換
+            const history = quotes.map(q => ({
+                timestamp: new Date(q.Date).getTime(),
+                open: q.testAdjO || q.AdjO || q.Open || q.O,
+                high: q.AdjH || q.High || q.H,
+                low: q.AdjL || q.Low || q.L,
+                close: q.AdjC || q.Close || q.C,
+                volume: q.AdjVolume || q.Volume || q.V || q.Vo,
+                price: q.AdjC || q.Close || q.C
+            }));
+
+            res.json(history);
+
+        } else {
+            // === Yahoo Finance (外国株) Logic ===
+            console.log(`[Yahoo Finance] Fetching history for: ${code}, Range: ${range}`);
+
+            const now = new Date();
+            const fromDate = new Date();
+            switch (range) {
+                case '1d': fromDate.setDate(now.getDate() - 1); break; // 1d is handled as logic
+                case '5d': fromDate.setDate(now.getDate() - 5); break;
+                case '1mo': fromDate.setMonth(now.getMonth() - 1); break;
+                case '3mo': fromDate.setMonth(now.getMonth() - 3); break;
+                case '6mo': fromDate.setMonth(now.getMonth() - 6); break;
+                case '1y': fromDate.setFullYear(fromDate.getFullYear() - 1); break;
+                case '2y': fromDate.setFullYear(fromDate.getFullYear() - 2); break;
+                case '5y': fromDate.setFullYear(fromDate.getFullYear() - 5); break;
+                default: fromDate.setFullYear(fromDate.getFullYear() - 1);
+            }
+
+            // queryOptions supports period1, period2, interval
+            const result = await yahooFinance.chart(code, {
+                period1: fromDate,
+                period2: now,
+                interval: interval // '1d', '1wk', '1mo'
+            });
+
+            if (!result || !result.quotes || result.quotes.length === 0) {
+                return res.status(404).json({ error: 'History not found (Yahoo)' });
+            }
+
+            const history = result.quotes.map(q => ({
+                timestamp: new Date(q.date).getTime(),
+                open: q.open,
+                high: q.high,
+                low: q.low,
+                close: q.close,
+                volume: q.volume,
+                price: q.close
+            }));
+
+            res.json(history);
         }
-        const fromDate = formatDate(fromDateObj);
-
-        const quotes = await fetchJQuantsData(code, fromDate, toDate);
-
-        if (!quotes || quotes.length === 0) {
-            return res.status(404).json({ error: 'History not found' });
-        }
-
-        // フロントエンドの形式に変換
-        const history = quotes.map(q => ({
-            timestamp: new Date(q.Date).getTime(),
-            open: q.testAdjO || q.AdjO || q.Open || q.O, // test~は存在しないかもしれないが念のため
-            high: q.AdjH || q.High || q.H,
-            low: q.AdjL || q.Low || q.L,
-            close: q.AdjC || q.Close || q.C,
-            volume: q.AdjVolume || q.Volume || q.V || q.Vo,
-            price: q.AdjC || q.Close || q.C
-        }));
-
-        res.json(history);
 
     } catch (error) {
-        console.error('J-Quants History Error:', error.message);
+        console.error('History API Error:', error.message);
         res.status(500).json({ error: 'Failed to fetch historical data' });
     }
 });

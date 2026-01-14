@@ -620,7 +620,8 @@ export async function getStockData(symbol: string): Promise<StockData> {
  */
 async function fetchStockHistoryFromProxy(symbol: string, days: number): Promise<HistoricalPrice[] | null> {
     try {
-        const code = symbol.replace('.T', '');
+        // 日本株(.T)の場合は削除、それ以外はそのままサーバーへ
+        const code = symbol.endsWith('.T') ? symbol.replace('.T', '') : symbol;
 
         // 日数をYahoo Financeのrange形式に変換
         let range = '1y';
