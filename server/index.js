@@ -3,7 +3,8 @@ require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') }
 const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
-const yahooFinance = require('yahoo-finance2').default; // Foreign stock support
+const YahooFinance = require('yahoo-finance2').default; // Foreign stock support
+const yahooFinance = new YahooFinance();
 
 const app = express();
 const PORT = 3001;
@@ -231,7 +232,8 @@ app.get('/api/stock/:code/history', async (req, res) => {
         }
 
     } catch (error) {
-        console.error('History API Error:', error.message);
+        console.error('History API Error:', error);
+        if (error.result) console.error('Error result:', error.result);
         res.status(500).json({ error: 'Failed to fetch historical data' });
     }
 });
