@@ -15,6 +15,14 @@ export default function SearchBar({ onSearch }: SearchBarProps) {
     const [isLoading, setIsLoading] = useState(false);
     const [selectedIndex, setSelectedIndex] = useState(-1);
 
+    const handleTypeChange = (type: 'crypto' | 'stock') => {
+        setAssetType(type);
+        setQuery('');
+        setSuggestions([]);
+        setShowSuggestions(false);
+        setSelectedIndex(-1);
+    };
+
     const handleInputChange = async (value: string) => {
         setQuery(value);
         setSelectedIndex(-1);
