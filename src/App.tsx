@@ -128,6 +128,7 @@ function App() {
             fontSize: 'clamp(2rem, 5vw, 3.5rem)',
             marginBottom: '0.5rem',
             letterSpacing: '0.1em',
+            textTransform: 'none',
           }}
         >
           AI Financial Forecaster
