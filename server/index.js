@@ -238,7 +238,12 @@ app.get('/api/stock/:code/history', async (req, res) => {
     }
 });
 
-app.listen(PORT, () => {
-    console.log(`Proxy Server running on http://localhost:${PORT}`);
-    console.log('Using J-Quants V2 API (Delayed Data)');
-});
+// ローカル開発時のみポートListen (Vercel環境ではexportされたappが使われる)
+if (require.main === module) {
+    app.listen(PORT, () => {
+        console.log(`Proxy Server running on http://localhost:${PORT}`);
+        console.log('Using J-Quants V2 API (Delayed Data)');
+    });
+}
+
+module.exports = app;
