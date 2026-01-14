@@ -55,6 +55,16 @@ VITE_API_BASE_URL=https://your-production-api-url.com
 ```
 *If not set, it defaults to `http://localhost:3001` (Development).*
 
+### Vercelでの設定方法 (How to set on Vercel)
+1.  Vercelのダッシュボードで対象のプロジェクトを開きます。
+2.  上部メニューの **"Settings"** をクリックします。
+3.  左側メニューから **"Environment Variables"** を選択します。
+4.  以下の内容を入力して **"Add"** をクリックします：
+    - **Key**: `VITE_API_BASE_URL`
+    - **Value**: `https://あなたの本番サーバーのURL` (例: `https://my-api.railway.app`)
+      - *注意: 末尾に `/api/stock` は不要です。ドメインまでを入力してください。*
+5.  設定後、**"Deployments"** タブに戻り、最新のデプロイを **"Redeploy"** すると反映されます。
+
 ## Next Steps
 - Push changes to repository.
 - Deploy to production and verified with env var set.
