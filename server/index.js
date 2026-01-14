@@ -9,59 +9,128 @@ const PORT = 3001;
 
 app.use(cors());
 
-// 株価データ取得エンドポイント
+const JQUANTS_API_URL = 'https://api.jquants.com/v2';
+
+// J-Quants API呼び出しヘルパー
+async function fetchJQuantsData(code, from, to) {
+    const apiKey = process.env.JQUANTS_API_KEY;
+    if (!apiKey) {
+        throw new Error('JQUANTS_API_KEY is not set');
+    }
+
+    // J-Quantsのコードは末尾の.Tを削除が必要な場合があるが、
+    // V2のドキュメントや検証ではそのまま数字コード(7203等)を使用。
+    // クライアントからは 7203.T で来るので削除する。
+    const stockCode = code.replace('.T', '');
+
+    try {
+        const response = await axios.get(`${JQUANTS_API_URL}/equities/bars/daily`, {
+            headers: { 'x-api-key': apiKey },
+            params: {
+                code: stockCode,
+                from: from,
+                to: to,
+                pagination_key: '' // ページネーションが必要な場合があるが、とりあえず簡易実装
+            }
+        });
+        return response.data.data; // { data: [...] }
+    } catch (error) {
+        console.error('J-Quants API Error:', error.response?.data || error.message);
+        throw error;
+    }
+}
+
+// 日付フォーマット YYYYMMDD
+function formatDate(date) {
+    const y = date.getFullYear();
+    const m = ('0' + (date.getMonth() + 1)).slice(-2);
+    const d = ('0' + date.getDate()).slice(-2);
+    return `${y}${m}${d}`;
+}
+
+// 過去の日付を計算
+function getPastDate(rangeStr) {
+    const date = new Date();
+    // J-Quants無料プランは12週間遅延なので、"現在"として扱う基準日をずらす必要があるか？
+    // ユーザーは「過去のグラフなどもそのデータ参照」と言っているので、
+    // 単純にAPIから返ってくる日付を使う。
+    // ただし、検索範囲の 'to' は現在日時でよいが、データがないだけ。
+    // 'from' は現在日時から遡って指定する。
+
+    switch (rangeStr) {
+        case '1d': date.setDate(date.getDate() - 5); break; // 休日考慮して少し長めに
+        case '5d': date.setDate(date.getDate() - 10); break;
+        case '1mo': date.setMonth(date.getMonth() - 1); break;
+        case '3mo': date.setMonth(date.getMonth() - 3); break;
+        case '6mo': date.setMonth(date.getMonth() - 6); break;
+        case '1y': date.setFullYear(date.getFullYear() - 1); break;
+        case '2y': date.setFullYear(date.getFullYear() - 2); break;
+        case '5y': date.setFullYear(date.getFullYear() - 5); break;
+        default: date.setFullYear(date.getFullYear() - 1);
+    }
+    return formatDate(date);
+}
+
+// 株価データ取得エンドポイント (現在価格相当)
 app.get('/api/stock/:code', async (req, res) => {
     try {
         const { code } = req.params;
-        // .Tサフィックスを追加(Yahoo Financeの東証銘柄フォーマット)
         const symbol = code.endsWith('.T') ? code : `${code}.T`;
+        console.log(`[J-Quants] Fetching delay stock data for: ${symbol}`);
 
-        console.log(`Fetching stock data for: ${symbol}`);
+        // 最新のデータを取得するために、過去6ヶ月分のデータを要求
+        // J-Quants無料プランは"現在"から約12週間前までのデータしかアクセスできないため、
+        // toDate も現在日時ではなく、12週間前の日付を指定する必要がある。
+        // "Your subscription covers the following dates: ... ~ 2025-10-22" というエラーが出るため。
 
-        // Yahoo Finance APIを使用
-        const response = await axios.get(
-            `https://query1.finance.yahoo.com/v8/finance/chart/${symbol}`,
-            {
-                headers: {
-                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
-                }
-            }
-        );
+        const now = new Date();
+        // 12週間(84日) + バッファで90日引く
+        now.setDate(now.getDate() - 90);
 
-        const result = response.data.chart.result[0];
+        const toDate = formatDate(now);
 
-        if (!result || !result.meta) {
+        // fromはそこからさらに半年前
+        const past = new Date(now);
+        past.setMonth(past.getMonth() - 6);
+        const fromDate = formatDate(past);
+
+        const quotes = await fetchJQuantsData(code, fromDate, toDate);
+
+        if (!quotes || quotes.length === 0) {
             return res.status(404).json({
                 error: 'Stock not found',
-                details: `No data available for symbol ${symbol}`
+                details: `No data available for symbol ${symbol} in J-Quants`
             });
         }
 
-        const meta = result.meta;
-        const currentPrice = meta.regularMarketPrice;
-        const previousClose = meta.previousClose || meta.chartPreviousClose;
+        // 配列の最後が最新
+        const latest = quotes[quotes.length - 1];
+        const previous = quotes.length >= 2 ? quotes[quotes.length - 2] : latest;
 
-        // 前日比を計算
+        // J-Quantsのレスポンス形式:
+        // { Date: '2025-10-22', Code: '72030', O: ..., H: ..., L: ..., C: ..., ... }
+        // 調整後終値(AdjC)を使用するのが一般的
+        const currentPrice = latest.AdjC || latest.Close || latest.C;
+        const previousClose = previous.AdjC || previous.Close || previous.C;
+
         const change = currentPrice - previousClose;
-        const changePercent = (change / previousClose) * 100;
+        const changePercent = previousClose !== 0 ? (change / previousClose) * 100 : 0;
 
         res.json({
             symbol: symbol,
             price: currentPrice,
             change: change,
             changePercent: changePercent,
-            currency: meta.currency,
-            exchange: meta.fullExchangeName,
-            source: 'Yahoo Finance',
-            timestamp: meta.regularMarketTime
+            currency: 'JPY', // J-Quantsは日本株のみなのでJPY固定
+            exchange: 'Tokyo',
+            source: 'J-Quants (V2・Delayed)',
+            isDelayed: true, // 遅延フラグ
+            timestamp: new Date(latest.Date).getTime()
         });
 
     } catch (error) {
-        console.error('Yahoo Finance API Error:', error.response?.data || error.message);
-        res.status(500).json({
-            error: 'Failed to fetch stock data',
-            details: error.response?.data?.chart?.error?.description || error.message
-        });
+        console.error('J-Quants Proxy Error:', error.message);
+        res.status(500).json({ error: 'Failed to fetch stock data' });
     }
 });
 
@@ -69,63 +138,57 @@ app.get('/api/stock/:code', async (req, res) => {
 app.get('/api/stock/:code/history', async (req, res) => {
     try {
         const { code } = req.params;
-        const { range = '1y', interval = '1d' } = req.query;
+        const { range = '1y' } = req.query;
 
-        // .Tサフィックスを追加
         const symbol = code.endsWith('.T') ? code : `${code}.T`;
+        console.log(`[J-Quants] Fetching history for: ${symbol}, Range: ${range}`);
 
-        console.log(`Fetching history for: ${symbol}, Range: ${range}, Interval: ${interval}`);
+        // J-Quants無料プラン対応: 現在から約90日前を最新(toDate)とする
+        const now = new Date();
+        now.setDate(now.getDate() - 90);
+        const toDate = formatDate(now);
 
-        const response = await axios.get(
-            `https://query1.finance.yahoo.com/v8/finance/chart/${symbol}`,
-            {
-                params: {
-                    range,
-                    interval
-                },
-                headers: {
-                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
-                }
-            }
-        );
+        // fromDateは、その toDate から range 分遡る
+        const fromDateObj = new Date(now); // toDateの時点
+        switch (range) {
+            case '1d': fromDateObj.setDate(fromDateObj.getDate() - 5); break;
+            case '5d': fromDateObj.setDate(fromDateObj.getDate() - 10); break;
+            case '1mo': fromDateObj.setMonth(fromDateObj.getMonth() - 1); break;
+            case '3mo': fromDateObj.setMonth(fromDateObj.getMonth() - 3); break;
+            case '6mo': fromDateObj.setMonth(fromDateObj.getMonth() - 6); break;
+            case '1y': fromDateObj.setFullYear(fromDateObj.getFullYear() - 1); break;
+            case '2y': fromDateObj.setFullYear(fromDateObj.getFullYear() - 2); break;
+            case '5y': fromDateObj.setFullYear(fromDateObj.getFullYear() - 5); break;
+            default: fromDateObj.setFullYear(fromDateObj.getFullYear() - 1);
+        }
+        const fromDate = formatDate(fromDateObj);
 
-        const result = response.data.chart.result[0];
+        const quotes = await fetchJQuantsData(code, fromDate, toDate);
 
-        if (!result || !result.timestamp) {
-            return res.status(404).json({
-                error: 'History not found',
-                details: `No historical data available for symbol ${symbol}`
-            });
+        if (!quotes || quotes.length === 0) {
+            return res.status(404).json({ error: 'History not found' });
         }
 
-        const timestamps = result.timestamp;
-        const quote = result.indicators.quote[0];
-
-        // 配列を結合してオブジェクトの配列に変換
-        const history = timestamps.map((timestamp, index) => {
-            return {
-                timestamp: timestamp * 1000, // 秒 -> ミリ秒
-                open: quote.open[index],
-                high: quote.high[index],
-                low: quote.low[index],
-                close: quote.close[index],
-                volume: quote.volume[index],
-                price: quote.close[index] // 互換性のためpriceも設定
-            };
-        }).filter(item => item.close !== null); // nullデータをフィルタリング
+        // フロントエンドの形式に変換
+        const history = quotes.map(q => ({
+            timestamp: new Date(q.Date).getTime(),
+            open: q.testAdjO || q.AdjO || q.Open || q.O, // test~は存在しないかもしれないが念のため
+            high: q.AdjH || q.High || q.H,
+            low: q.AdjL || q.Low || q.L,
+            close: q.AdjC || q.Close || q.C,
+            volume: q.AdjVolume || q.Volume || q.V || q.Vo,
+            price: q.AdjC || q.Close || q.C
+        }));
 
         res.json(history);
 
     } catch (error) {
-        console.error('Yahoo Finance History API Error:', error.response?.data || error.message);
-        res.status(500).json({
-            error: 'Failed to fetch historical data',
-            details: error.response?.data?.chart?.error?.description || error.message
-        });
+        console.error('J-Quants History Error:', error.message);
+        res.status(500).json({ error: 'Failed to fetch historical data' });
     }
 });
 
 app.listen(PORT, () => {
     console.log(`Proxy Server running on http://localhost:${PORT}`);
-    console.log('Using Yahoo Finance API for Japanese stock data');
+    console.log('Using J-Quants V2 API (Delayed Data)');
 });
