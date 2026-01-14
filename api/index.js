@@ -139,7 +139,9 @@ app.get('/api/stock/:code', async (req, res) => {
         res.status(500).json({
             error: 'Failed to fetch stock data',
             debug_message: error.message,
-            debug_details: error.response?.data || 'No response data'
+            debug_details: error.response?.data || 'No response data',
+            env_vars_available: Object.keys(process.env).filter(k => !k.includes('SECRET') && !k.includes('KEY')), // セキュリティのためキー名だけ（値は隠す）、API_KEY系も除外したいが...確認のため出す
+            has_jquants_key: !!process.env.JQUANTS_API_KEY
         });
     }
 });
