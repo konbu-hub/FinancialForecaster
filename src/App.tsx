@@ -130,7 +130,7 @@ function App() {
             letterSpacing: '0.1em',
           }}
         >
-          AI FinancialForecaster
+          AI Financial Forecaster
         </h1>
         <p style={{ color: 'var(--color-gray-400)', fontSize: '1.125rem' }}>
           仮想通貨・株式の未来を予測する次世代AIアナリスト
