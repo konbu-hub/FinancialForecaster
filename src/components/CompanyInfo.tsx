@@ -7,9 +7,23 @@ interface CompanyInfoProps {
 export default function CompanyInfo({ stockData }: CompanyInfoProps) {
     return (
         <div className="glass-card animate-slide-up" style={{ padding: '2rem', marginBottom: '2rem' }}>
-            <h3 className="glow-text-cyan" style={{ marginBottom: '1.5rem', fontSize: '1.5rem', fontWeight: 700 }}>
-                🏢 企業情報
-            </h3>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+                <h3 className="glow-text-cyan" style={{ fontSize: '1.5rem', fontWeight: 700, margin: 0 }}>
+                    🏢 企業情報
+                </h3>
+                {stockData.market && (
+                    <span style={{
+                        background: 'rgba(0, 255, 255, 0.1)',
+                        border: '1px solid rgba(0, 255, 255, 0.3)',
+                        borderRadius: '4px',
+                        padding: '0.25rem 0.75rem',
+                        fontSize: '0.875rem',
+                        color: 'var(--color-text-secondary)'
+                    }}>
+                        {stockData.market}
+                    </span>
+                )}
+            </div>
 
             <div style={{
                 display: 'grid',
